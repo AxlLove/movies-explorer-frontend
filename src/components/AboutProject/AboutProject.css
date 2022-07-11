@@ -1,0 +1,28 @@
+.about-project {
+    padding: 0 70px 0;
+}
+.about-project__text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+.about-project__quote {
+    margin: 0;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.04em;
+    width: 420px;
+}
+.about-project__paragraph {
+    margin: 0;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    width: 420px;
+}
+.about-project__two-column {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 70px;
+}
