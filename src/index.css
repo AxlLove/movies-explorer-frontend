@@ -5,4 +5,6 @@
 @import url(components/Main/Main.css);
 @import url(components/Promo/Promo.css);
 @import url(components/AboutProject/AboutProject.css);
-@import url(blocks/section-title/section-title.css);
+@import url(components/SectionTitle/Section-title.css);
+@import url(components/Techs/Techs.css);
+@import url(components/AboutMe/AboutMe.css);
