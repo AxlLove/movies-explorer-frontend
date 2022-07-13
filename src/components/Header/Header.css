@@ -25,6 +25,7 @@ display: flex;
     font-size: 12px;
     line-height: 16px;
     text-align: center;
+    cursor: pointer;
 }
 .header__login-button{
     background-color: #2BE080;
@@ -35,4 +36,5 @@ display: flex;
     border: none;
     font-size: 12px;
     line-height: 16px;
+    cursor: pointer;
 }
