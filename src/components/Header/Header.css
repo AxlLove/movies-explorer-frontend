@@ -13,9 +13,10 @@
     height: 38px;
     background-repeat: no-repeat;
     background-size: contain;
+    cursor: pointer;
 }
 .header__link-container {
-display: flex;
+    display: flex;
     gap: 30px;
     align-items: baseline;
 }
