@@ -1,0 +1,33 @@
+.search-form__hiden-checkbox {
+    position: absolute;
+    width: 1px; /* если у элемента не будет размеров, некоторые браузеры посчитают, что его вообще нет */
+    height: 1px;
+    overflow: hidden; /* без этого свойства тоже сработает, но так наверняка. Мы его ещё изучим, оно скрывает элементы, выходящие за границы родителя */
+    clip: rect(0 0 0 0);
+} 
+.search-form__visible-checkbox {
+    display: inline-block; /* элемент span теперь сможет принимать определённую ширину и высоту */
+    vertical-align: middle;
+    width: 36px;
+    height: 20px;
+    
+    background-image: url(../../images/smalltumboff.svg);
+  }
+
+  .search-form__hiden-checkbox:checked + .search-form__visible-checkbox {
+    background-image: url(../../images/filterCheckboxOn.svg);
+  }
+  .search-form__hiden-checkbox:focus + .search-form__visible-checkbox {
+    border: 1px solid #2BE080;
+    border-radius: 20px;
+  }
+  .search-form__visible-checkbox-text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    margin: 0 0 0 12px;
+  }
+  .search-form__checkbox-container {
+    display: flex;
+    justify-content: center;
+  }

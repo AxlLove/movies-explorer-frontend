@@ -10,7 +10,6 @@ function Footer() {
         <li><a className="footer__link" href="https://practicum.yandex.ru/" target="_blank" rel="noreferrer">Яндекс.Практикум</a></li>
         <li><a className="footer__link" href="https://github.com/AxlLove/russian-travel" target="_blank"rel="noreferrer">Github</a></li>
         <li><a className="footer__link" href="https://vk.com/id18328535" target="_blank" rel="noreferrer">Вконтакте</a></li>
-
     </ul>
 </div>
         </footer>

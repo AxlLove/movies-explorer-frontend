@@ -1,9 +1,7 @@
-import './Header.css';
 import {Link, NavLink} from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 
 function Header({loggedIn, isMain}) {
-    console.log(loggedIn, isMain)
     return (
 
         loggedIn ?
@@ -34,5 +32,4 @@ function Header({loggedIn, isMain}) {
 
 export default Header;
 
-//TODO зменить тег p на Link из react router
-//TODO придумать реализацию пропсов header__link-container
+//TODO меню встает криво, добавил margin подумамй как можно сделать
