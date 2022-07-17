@@ -7,13 +7,14 @@
     justify-content: space-between;
     align-items: center;
 }
-.header__logo {
+.logo {
     background-image: url("../../images/logo.svg");
     width: 38px;
     height: 38px;
     background-repeat: no-repeat;
     background-size: contain;
     cursor: pointer;
+    display: block;
 }
 .header__link-container {
     display: flex;
@@ -27,6 +28,7 @@
     line-height: 16px;
     text-align: center;
     cursor: pointer;
+    text-decoration: none;
 }
 .header__login-button{
     background-color: #2BE080;
@@ -38,4 +40,11 @@
     font-size: 12px;
     line-height: 16px;
     cursor: pointer;
+    display: flex;
+}
+.header__login-link {
+    text-decoration: none;
+}
+.header__login-button-text {
+    margin: auto;
 }

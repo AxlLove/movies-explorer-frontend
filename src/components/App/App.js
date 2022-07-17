@@ -6,13 +6,16 @@ import Footer from "../Footer/Footer";
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
+import Register from "../Register/Register";
+import Login from "../Login/Login";
+import NotFoundPage from "../NotFoundPage/NotFoundPage";
 
 function App() {
   return (
       <Switch>
           <Route path='/' exact>
               <div className="App">
-                  <Header loggedIn={true} isMain={true}></Header>
+                  <Header loggedIn={false} isMain={true}></Header>
                   <Main/>
                   <Footer/>
               </div>
@@ -35,6 +38,27 @@ function App() {
               <div className="App">
                 <Header loggedIn={true} isMain={false}/>
                 <Profile/>
+              </div>
+          </Route>
+          <Route path='/profile'>
+              <div className="App">
+                  <Header loggedIn={true} isMain={false}/>
+                  <Profile/>
+              </div>
+          </Route>
+          <Route path='/signup'>
+              <div className="App">
+                  <Register/>
+              </div>
+          </Route>
+          <Route path='/signin'>
+              <div className="App">
+                  <Login/>
+              </div>
+          </Route>
+          <Route path='*'>
+              <div className="App">
+                  <NotFoundPage/>
               </div>
           </Route>
       </Switch>

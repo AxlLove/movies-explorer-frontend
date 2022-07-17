@@ -3,11 +3,10 @@ import Navigation from "../Navigation/Navigation";
 
 function Header({loggedIn, isMain}) {
     return (
-
         loggedIn ?
         <header className={`header ${isMain ? "header_type_main-page" : ""}`}>
             <div className="header__content">
-                <Link to="/" className="header__logo"/>
+                <Link to="/" className="logo"/>
                 <Navigation>
                     <NavLink to="/movies" activeClassName='menu__link_active' className={`menu__link ${isMain ? "menu__link_type_main-page" : ""}`}>Фильмы</NavLink>
                     <NavLink to="/saved-movies" activeClassName='menu__link_active' className={`menu__link ${isMain ? "menu__link_type_main-page" : ""}`}>Сохранённые фильмы</NavLink>
@@ -20,10 +19,14 @@ function Header({loggedIn, isMain}) {
             :
             <header className={`header ${isMain ? "header_type_main-page" : ""}`}>
                 <div className="header__content">
-                    <Link to="/" className="header__logo"/>
+                    <Link to="/" className="logo"/>
                     <div className="header__link-container">
-                        <p className="header__register-link">Регистрация</p>
-                        <button className="header__login-button">Войти</button>
+                        <Link to="/signup" className="header__register-link">Регистрация</Link>
+                        <Link to="/signin" className="header__login-link">
+                            <div className="header__login-button">
+                                <p className="header__login-button-text">Войти</p>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </header>
@@ -33,3 +36,4 @@ function Header({loggedIn, isMain}) {
 export default Header;
 
 //TODO меню встает криво, добавил margin подумамй как можно сделать
+//TODO https://alvarotrigo.com/blog/hamburger-menu-css/
