@@ -29,4 +29,8 @@
     text-decoration: none;
     color: #3456F3;
     cursor: pointer;
+    transition: visibility 0s, opacity 0.5s;
+}
+.not-found__back-link:hover {
+    opacity: .7;
 }

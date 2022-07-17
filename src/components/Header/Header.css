@@ -15,6 +15,10 @@
     background-size: contain;
     cursor: pointer;
     display: block;
+    transition: visibility 0s, opacity 0.5s; 
+}
+.logo:hover {
+    opacity: .8;
 }
 .header__link-container {
     display: flex;
@@ -29,6 +33,10 @@
     text-align: center;
     cursor: pointer;
     text-decoration: none;
+    transition: visibility 0s, opacity 0.5s;
+}
+.header__register-link:hover {
+    opacity: .7;
 }
 .header__login-button{
     background-color: #2BE080;
@@ -41,10 +49,15 @@
     line-height: 16px;
     cursor: pointer;
     display: flex;
+    transition: visibility 0s, opacity 0.5s;
+}
+.header__login-button:hover {
+    opacity: .8;
 }
 .header__login-link {
     text-decoration: none;
 }
+
 .header__login-button-text {
     margin: auto;
 }

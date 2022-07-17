@@ -47,4 +47,9 @@
     line-height: 18px;
     text-align: center;
     color: #FFFFFF;
+    transition: visibility 0s, opacity 0.5s;
+    cursor: pointer;
+}
+.movies__search-button:hover {
+    opacity: .8;
 }

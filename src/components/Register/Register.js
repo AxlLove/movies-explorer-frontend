@@ -10,17 +10,17 @@ function Register () {
                 <fieldset className="auth-form__input-container">
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">Имя</span>
-                        <input type="text" className="auth-form__text-field"/>
+                        <input type="text" className="auth-form__text-field" required/>
                         <span className="auth-form__error-message">Что-то пошло не так...</span>
                     </label>
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">E-mail</span>
-                        <input type="text" className="auth-form__text-field"/>
+                        <input type="text" className="auth-form__text-field" required/>
                         <span className="auth-form__error-message">Что-то пошло не так...</span>
                     </label>
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">Пароль</span>
-                        <input type="text" className="auth-form__text-field"/>
+                        <input type="text" className="auth-form__text-field" required/>
                         <span className="auth-form__error-message auth-form__error-message_visible">Что-то пошло не так...</span>
                     </label>
                 </fieldset>

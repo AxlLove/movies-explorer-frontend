@@ -8,7 +8,11 @@
     font-weight: 400;
     font-size: 13px;
     line-height: 18px;
-    color: #000000
+    color: #000000;
+    transition: visibility 0s, opacity 0.5s;
+}
+.menu__link:hover {
+    opacity: .7;
 }
 .menu__link_active {
     font-weight: 500;
@@ -21,6 +25,10 @@
     align-items: center;
     color: #000000;
     text-decoration: none;
+    transition: visibility 0s, opacity 0.5s;
+}
+.menu__account-link:hover {
+    opacity: .7;
 }
 .menu__link-image {
     margin-left: 13px;

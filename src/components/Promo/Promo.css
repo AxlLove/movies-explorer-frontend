@@ -37,6 +37,11 @@
     line-height: 16px;
     color: white;
     margin: 84px 0 75px;
+    transition: visibility 0s, opacity 0.5s;
+    cursor: pointer;
+}
+.promo__button:hover {
+    opacity: .7;
 }
 .promo__content {
     display: flex;

@@ -19,27 +19,6 @@ function AboutMe() {
                 </div>
                 <img src={heroPhoto} alt="heroImage" className="about-me__photo"/>
             </div>
-            <h2 className="about-me__portfolio-title">Портфолио</h2>
-            <ul className="about-me__portfolio-list">
-                <li className="about-me__portfolio-container">
-                    <a href="https://github.com/AxlLove/how-to-learn" target='_blank' rel="noreferrer" className="about-me__portfolio-link">
-                        <p className="about-me__link-text">Статичный сайт</p>
-                        <div className="about-me__link-icon"/>
-                    </a>
-                </li>
-                <li className="about-me__portfolio-container">
-                    <a href="https://github.com/AxlLove/russian-travel" target='_blank' rel="noreferrer" className="about-me__portfolio-link">
-                        <p className="about-me__link-text">Адаптивный сайт</p>
-                        <div className="about-me__link-icon"/>
-                    </a>
-                </li>
-                <li className="about-me__portfolio-container">
-                    <a href="https://github.com/AxlLove/react-mesto-api-full" target='_blank' rel="noreferrer" className="about-me__portfolio-link">
-                        <p className="about-me__link-text">Одностраничное приложение</p>
-                        <div className="about-me__link-icon"/>
-                    </a>
-                </li>
-            </ul>
         </section>
     );
 }

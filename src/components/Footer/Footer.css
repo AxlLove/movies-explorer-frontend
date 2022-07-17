@@ -44,4 +44,8 @@
     font-size: 13px;
     line-height: 16px;
     color: #000000;
+    transition: visibility 0s, opacity 0.5s;
+}
+.footer__link:hover {
+    opacity: .7;
 }

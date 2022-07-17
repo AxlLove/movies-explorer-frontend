@@ -56,38 +56,9 @@
     line-height: 17px;
     margin: 0;
     color: #000000;
+    cursor: pointer;
+    transition: visibility 0s, opacity 0.5s;
 }
-.about-me__portfolio-title {
-    margin: 0;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 20px;
-    color: #A0A0A0;
-}
-.about-me__portfolio-list {
-    list-style-type: none;
-    margin: 50px 0 125px;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.about-me__portfolio-container {
-    border-bottom: 1px solid #E8E8E8;
-}
-.about-me__portfolio-link {
-    display: flex;
-    justify-content: space-between;
-    text-decoration: none;
-}
-.about-me__portfolio-container:last-child {
-    border-bottom: none;
-}
-.about-me__link-text {
-    margin: 0;
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 50px;
-    letter-spacing: -0.04em;
-    color: black;
+.about-me__social-networks-link:hover {
+    opacity: .7;
 }

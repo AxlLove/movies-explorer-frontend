@@ -72,4 +72,8 @@
     text-align: center;
     color: #3456F3;
     text-decoration: none;
+    transition: visibility 0s, opacity 0.5s;
+}
+.auth-form__link:hover {
+    opacity: .7;
 }

@@ -18,4 +18,9 @@
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
+    cursor: pointer;
+    transition: visibility 0s, opacity 0.5s;
+}
+.movies__add-card-button:hover {
+    opacity: .7;
 }
