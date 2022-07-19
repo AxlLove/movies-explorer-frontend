@@ -20,12 +20,11 @@
     margin: 5px auto 0;
 }
 .not-found__back-link {
-    margin: auto;
+    margin: 184px auto 60px;
     font-weight: 400;
     font-size: 16px;
     line-height: 19px;
     text-align: center;
-    margin: 184px auto 60px;
     text-decoration: none;
     color: #3456F3;
     cursor: pointer;
@@ -33,4 +32,30 @@
 }
 .not-found__back-link:hover {
     opacity: .7;
+}
+@media screen and (max-width: 980px) {
+    .not-found__title {
+        margin: 408px auto 0;
+    }
+    .not-found__back-link {
+        margin: 184px auto 222px;
+    }
+}
+@media screen and (max-width: 750px) {
+    .not-found__title {
+        margin: 329px auto 0;
+        font-size: 80px;
+        line-height: 97px;
+    }
+    .not-found__message {
+        margin: 10px auto 0;
+        font-size: 12px;
+        line-height: 15px;
+    }
+    .not-found__back-link {
+        margin: 284px auto 30px;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
 }

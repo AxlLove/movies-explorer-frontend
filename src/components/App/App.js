@@ -15,7 +15,7 @@ function App() {
       <Switch>
           <Route path='/' exact>
               <div className="App">
-                  <Header loggedIn={false} isMain={true}></Header>
+                  <Header loggedIn={true} isMain={true}></Header>
                   <Main/>
                   <Footer/>
               </div>
@@ -69,3 +69,5 @@ export default App;
 
 //TODO почистить импорты .css
 //TODO описать все ховеры и анимации]
+//TODO добавить прелодер
+//TODO описать состояние кнопок disabled

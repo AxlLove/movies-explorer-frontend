@@ -49,11 +49,8 @@
     opacity: .8;
 }
 .movies__card-button_type_saved {
-    background: #FF3055;
     color: transparent;
-    background-image: url(../../images/sevedbuttonicon.svg);
-    background-position: center;
-    background-repeat: no-repeat;
+    background: #FF3055 url(../../images/sevedbuttonicon.svg) no-repeat center;
 }
 .movies__card-button_type_delete {
     background-image: url(../../images/deletebutton.svg);
@@ -62,5 +59,23 @@
 }
 .movies__card-button_type_delete:hover {
     opacity: .7;
+}
+@media screen and (max-width: 980px) {
+    .movies__card {
+        width: 342px;
+        height: 309px;
+    }
+}
+@media screen and (max-width: 750px) {
+    .movies__card {
+        width: 300px;
+        height: 271px;
+    }
+    .movies__card-info {
+        margin: 14px;
+    }
+    .movies__card-button {
+        margin: 14px auto 0;
+    }
 }
 

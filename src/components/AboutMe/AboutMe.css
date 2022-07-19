@@ -22,20 +22,14 @@
     margin: 26px 0 0;
 }
 .about-me__info-text-content {
-    width: 600px;
+    width: 550px;
 }
 .about-me__info {
     display: flex;
     justify-content: space-between;
     margin-top: 66px;
 }
-.about-me__link-icon {
-    background-image: url("../../images/gitlink.svg");
-    width: 29px;
-    height: 60px;
-    background-repeat: no-repeat;
-    background-position: center;
-}
+
 .about-me__photo {
     width: 270px;
     height: 327px;
@@ -61,4 +55,76 @@
 }
 .about-me__social-networks-link:hover {
     opacity: .7;
+}
+
+@media screen and (max-width: 980px) {
+    .about-me {
+        padding: 90px 50px 0;
+    }
+    .about-me__name {
+        font-size: 40px;
+        line-height: 40px;
+    }
+    .about-me__description {
+        font-size: 12px;
+        line-height: 18px;
+        margin: 20px 0 0;
+        width: 360px;
+    }
+    .about-me__photo {
+        width: 255px;
+        height: 307px;
+    }
+    .about-me__info-text-content {
+        width: 360px;
+    }
+    .about-me__social-networks {
+        padding: 0;
+        margin: 87px 0 90px;
+        list-style-type: none;
+        display: flex;
+        gap: 20px;
+    }
+}
+@media screen and (max-width: 750px) {
+    .about-me {
+        padding: 70px 14px 0;
+    }
+    .about-me__info {
+        margin-top: 60px;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .about-me__photo {
+        width: 292px;
+        height: 352px;
+
+    }
+    .about-me__info-text-content {
+        width: 292px;
+    }
+    .about-me__name {
+        margin: 40px auto 0;
+        width: 292px;
+        font-size: 30px;
+        line-height: 36px;
+    }
+    .about-me__title {
+        width: 292px;
+        font-size: 11px;
+        line-height: 16px;
+        margin: 20px auto 0;
+    }
+    .about-me__description {
+        width: 292px;
+        font-size: 11px;
+        line-height: 16px;
+        margin: 20px auto 0;
+    }
+    .about-me__social-networks {
+        margin: 40px auto 69px;
+        gap: 26px;
+        width: 298px;
+    }
+
 }

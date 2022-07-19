@@ -1,3 +1,8 @@
 .auth-form__input-container_type_login {
     margin-bottom: 200px;
 }
+@media screen and (max-width: 750px) {
+    .auth-form__input-container_type_login {
+        margin-bottom: 300px;
+    }
+}

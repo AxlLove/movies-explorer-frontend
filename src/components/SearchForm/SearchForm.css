@@ -53,3 +53,34 @@
 .movies__search-button:hover {
     opacity: .8;
 }
+@media screen and (max-width: 980px) {
+    .movies__input-container {
+        padding: 86px 0 15px;
+    }
+    .movies__search-input {
+        width: 440px;
+    }
+
+}
+@media screen and (max-width: 750px) {
+    .movies__input-container {
+        padding: 98px 0 14px;
+    }
+    .movies__search-input {
+        width: 440px;
+    }
+    .movies__search-icon  {
+        display: none;
+    }
+    .movies__search-input {
+        font-size: 18px;
+        line-height: 22px;
+        width: 220px;
+        text-align: start;
+    }
+    .movies__input-container {
+        padding: 92px 0 9px;
+        margin-bottom: 43px;
+    }
+
+}

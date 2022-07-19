@@ -32,6 +32,7 @@
     color: #000000;
 }
 .footer__links-container {
+    padding: 0;
     list-style-type: none;
     display: flex;
     gap: 20px;
@@ -48,4 +49,42 @@
 }
 .footer__link:hover {
     opacity: .7;
+}
+@media screen and (max-width: 980px) {
+    .footer {
+        margin: 0 30px;
+    }
+}
+@media screen and (max-width: 750px) {
+    .footer {
+        margin: 0 10px;
+        padding-bottom: 10px;
+    }
+    .footer__title {
+        font-size: 12px;
+        line-height: 15px;
+        padding: 79px 0 21px;
+    }
+    .footer__content {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 30px;
+    }
+    .footer__links-container {
+        flex-direction: column-reverse;
+        gap: 10px;
+        align-items: center;
+    }
+    .footer__link {
+        font-size: 12px;
+        line-height: 15px;
+        text-align: center;
+    }
+    .footer__year {
+        font-size: 12px;
+        line-height: 15px;
+        color: #A0A0A0;
+    }
 }

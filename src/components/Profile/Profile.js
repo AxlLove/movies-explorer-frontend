@@ -7,11 +7,11 @@ function Profile () {
             <ul className="profile__info-container">
                 <li className="profile__info">
                     <p className="profile__info-type">Имя</p>
-                    <p className="prfole__info-current">{name}</p>
+                    <p className="profile__info-current">{name}</p>
                 </li>
                 <li className="profile__info">
                     <p className="profile__info-type">E-mail</p>
-                    <p className="prfole__info-current">{eMail}</p>
+                    <p className="profile__info-current">{eMail}</p>
                 </li>
             </ul>
             <div className="profile__buttons">

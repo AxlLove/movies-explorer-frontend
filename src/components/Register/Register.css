@@ -77,3 +77,31 @@
 .auth-form__link:hover {
     opacity: .7;
 }
+@media screen and (max-width: 980px) {
+    .auth-form {
+        margin: 232px auto;
+    }
+}
+@media screen and (max-width: 750px) {
+    .auth-form {
+        margin: 56px auto;
+        padding: 0 30px;
+        align-items: center;
+        width: 260px;
+    }
+    .auth-form__title {
+        margin: 0 auto 80px;
+    }
+    .auth-form__text {
+        font-size: 12px;
+        line-height: 15px;
+        margin: 14px 0 0;
+    }
+    .auth-form__link {
+        font-size: 12px;
+        line-height: 15px;
+    }
+    .auth-form__input-container {
+        margin: 0 0 235px 0;
+    }
+}
