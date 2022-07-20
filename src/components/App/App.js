@@ -9,55 +9,56 @@ import Profile from '../Profile/Profile';
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
+import Preloader from '../Preloader/Preloader';
 
 function App() {
   return (
       <Switch>
           <Route path='/' exact>
-              <div className="App">
-                  <Header loggedIn={true} isMain={true}></Header>
+              <div className="page">
+                  <Header loggedIn={false} isMain={true}></Header>
                   <Main/>
                   <Footer/>
               </div>
           </Route>
           <Route path='/movies' >
-              <div className="App">
+              <div className="page">
                   <Header loggedIn={true} isMain={false}></Header>
                   <Movies></Movies>
                   <Footer/>
               </div>
           </Route>
           <Route path='/saved-movies' >
-              <div className="App">
+              <div className="page">
                   <Header loggedIn={true} isMain={false}></Header>
                   <SavedMovies></SavedMovies>
                   <Footer/>
               </div>
           </Route>  
           <Route path='/profile'>
-              <div className="App">
+              <div className="page">
                 <Header loggedIn={true} isMain={false}/>
                 <Profile/>
               </div>
           </Route>
           <Route path='/profile'>
-              <div className="App">
+              <div className="page">
                   <Header loggedIn={true} isMain={false}/>
                   <Profile/>
               </div>
           </Route>
           <Route path='/signup'>
-              <div className="App">
+              <div className="page">
                   <Register/>
               </div>
           </Route>
           <Route path='/signin'>
-              <div className="App">
+              <div className="page">
                   <Login/>
               </div>
           </Route>
           <Route path='*'>
-              <div className="App">
+              <div className="page">
                   <NotFoundPage/>
               </div>
           </Route>
@@ -67,7 +68,3 @@ function App() {
 
 export default App;
 
-//TODO почистить импорты .css
-//TODO описать все ховеры и анимации]
-//TODO добавить прелодер
-//TODO описать состояние кнопок disabled

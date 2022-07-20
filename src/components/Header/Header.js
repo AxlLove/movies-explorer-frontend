@@ -11,11 +11,11 @@ function Header({loggedIn, isMain}) {
                     <input type="checkbox" id="checkboxToggle" className="menu__burger-check-box"/>
                     <label htmlFor="checkboxToggle" className="menu__hamburger"><span className={`menu__hamburger-line ${isMain ? "menu__hamburger-line_type_main-page" : ""}`}/></label>
                     <div className="menu__content">
-                        <div className="menu__links">
-                            <NavLink exact to="/" activeClassName='menu__link_active' className={`menu__link menu__link_type_main ${isMain ? "menu__link_type_main-page" : ""}`}>Главная</NavLink>
-                            <NavLink to="/movies" activeClassName='menu__link_active' className={`menu__link ${isMain ? "menu__link_type_main-page" : ""}`}>Фильмы</NavLink>
-                            <NavLink to="/saved-movies" activeClassName='menu__link_active' className={`menu__link ${isMain ? "menu__link_type_main-page" : ""}`}>Сохранённые фильмы</NavLink>
-                        </div>
+                        <ul className="menu__links">
+                            <li><NavLink exact to="/" activeClassName='menu__link_active' className={`menu__link menu__link_type_main ${isMain ? "menu__link_type_main-page" : ""}`}>Главная</NavLink></li>
+                            <li><NavLink to="/movies" activeClassName='menu__link_active' className={`menu__link ${isMain ? "menu__link_type_main-page" : ""}`}>Фильмы</NavLink></li>
+                            <li><NavLink to="/saved-movies" activeClassName='menu__link_active' className={`menu__link ${isMain ? "menu__link_type_main-page" : ""}`}>Сохранённые фильмы</NavLink></li>  
+                        </ul>
                         <Link to="/profile" className={`menu__account-link ${isMain ? "menu__account-link_type_main-page" : ""}`}>Аккаунт
                             <div className={`menu__link-image ${isMain ? "menu__link-image_type_main-page" : ""}`}/>
                         </Link>
@@ -44,5 +44,3 @@ function Header({loggedIn, isMain}) {
 
 export default Header;
 
-//TODO меню встает криво, добавил margin подумамй как можно сделать
-//TODO https://alvarotrigo.com/blog/hamburger-menu-css/
