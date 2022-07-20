@@ -10,8 +10,8 @@ function Promo() {
                 </div>
                 <div className="promo__image"/>
             </div>
-
-            <button className="promo__button">Узнать больше</button>
+<a  href='https://github.com/AxlLove/movies-explorer-frontend' target='_blank' rel="noreferrer"><button className="promo__button">Узнать больше</button></a>
+            
 
         </section>
     );

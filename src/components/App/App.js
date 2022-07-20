@@ -9,7 +9,6 @@ import Profile from '../Profile/Profile';
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
-import Preloader from '../Preloader/Preloader';
 
 function App() {
   return (
