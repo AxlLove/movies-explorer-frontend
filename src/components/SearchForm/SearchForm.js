@@ -4,9 +4,9 @@ function SearchForm() {
     return (
 <form className="movies__search-form">
     <div className="movies__input-container">
-        <div className="movies__search-icon"></div>
-        <input type="text" className="movies__search-input" placeholder="Фильм"></input>
-        <button type="button" className="movies__search-button">Найти</button>
+        <div className="movies__search-icon"/>
+        <input type="text" className="movies__search-input" placeholder="Фильм" required></input>
+        <button type="submit" className="movies__search-button">Найти</button>
     </div>
     <FilterCheckbox></FilterCheckbox>
 </form>
