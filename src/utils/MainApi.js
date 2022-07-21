@@ -1,0 +1,1 @@
+const MAIN_URL = 'https://api.diplom-me.nomoreparties.sbs'
