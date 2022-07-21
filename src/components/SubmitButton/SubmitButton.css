@@ -1,0 +1,41 @@
+.submit-button {
+    padding: 0;
+    margin: 0;
+    background: #3456F3;
+    border-radius: 3px;
+    width: 396px;
+    height: 45px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    transition: visibility 0s, opacity 0.5s;
+}
+.submit-button_disabled {
+    color: #C2C2C2;
+    background: #F8F8F8;
+}
+.submit-button:hover {
+    opacity: .7;
+}
+.submit-button__error-mesage {
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: center;
+    color: #FF004C;
+    margin: 0 auto 20px;
+    visibility: hidden;
+}
+.submit-button__error-mesage_visible {
+    visibility: visible;
+}
+@media screen and (max-width: 750px) {
+    .submit-button {
+        width: 260px;
+        margin: auto;
+    }
+}
