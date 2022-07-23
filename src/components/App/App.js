@@ -1,5 +1,7 @@
 import './App.css';
 import {Route, Switch,} from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import * as MoviesApi from "../../utils/MoviesApi";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
@@ -9,9 +11,62 @@ import Profile from '../Profile/Profile';
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
+import {slice,concat} from 'lodash'
+
 
 function App() {
-  return (
+    const [cards, setCards] = useState([])
+    const [checkBoxState, setCheckBoxState] = useState(false)
+    const [inputState, setInputState] = useState('')
+    const [load, setLoad] = useState(false)
+    const [cardLoadErr, setCardLoadErr] = useState(false)
+
+    function onSubmitFindMovies () {
+        setCardLoadErr(false)
+        setLoad(true)
+        MoviesApi.getFilms().then((res)=> {
+            setCards(res)
+}).then(()=>{
+                // console.log('submit=>', cards)
+                // localStorage.setItem("filter", JSON.stringify({
+                //     input: inputState,
+                //     checkBox: checkBoxState,
+                //     cardsList: cards,
+                // }))
+            })
+                .catch(err=>{
+                    console.log(err)
+                    setCardLoadErr(true)
+                })
+            .finally(()=> {
+                setLoad(false)
+            })
+}
+    // useEffect(()=> {
+    //  const savedFilter = JSON.parse(localStorage.getItem('filter'))
+    //     if (savedFilter===null) {
+    //         return
+    //     }
+    //     setCards(savedFilter.cardsList)
+    //     setCheckBoxState(savedFilter.checkBox)
+    //     setInputState(savedFilter.input)
+    //     console.log(savedFilter)
+    //     console.log(savedFilter.checkBox)
+    //     console.log(savedFilter.input)
+    //
+    // },[])
+
+    function saveInputChange (e) {
+        setInputState(e.target.value)
+    }
+    function saveCheckBoxChange (e) {
+        setCheckBoxState(e.target.checked)
+    }
+
+
+
+
+    return (
       <Switch>
           <Route path='/' exact>
               <div className="page">
@@ -23,7 +78,15 @@ function App() {
           <Route path='/movies' >
               <div className="page">
                   <Header loggedIn={true} isMain={false}></Header>
-                  <Movies></Movies>
+                  <Movies cards={cards}
+                          onSubmitFindMovies={onSubmitFindMovies}
+                          saveInputChange={saveInputChange}
+                          saveCheckBoxChange={saveCheckBoxChange}
+                          checkBoxState={checkBoxState}
+                          inputState={inputState}
+                          load={load}
+                          cardLoadErr={cardLoadErr}
+                  />
                   <Footer/>
               </div>
           </Route>
@@ -67,3 +130,6 @@ function App() {
 
 export default App;
 
+
+//TODO https://habr.com/ru/company/timeweb/blog/584862/
+//TODO ошибка загрузки cards в localstorage

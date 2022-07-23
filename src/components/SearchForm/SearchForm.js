@@ -1,14 +1,18 @@
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-function SearchForm() {
+function SearchForm({onSubmitFindMovies,saveCheckBoxChange, saveInputChange, checkBoxState, inputState}) {
+    function handleSubmit(e) {
+        e.preventDefault()
+        onSubmitFindMovies();
+    }
     return (
-<form className="movies__search-form">
+<form onSubmit={handleSubmit} className="movies__search-form">
     <div className="movies__input-container">
         <div className="movies__search-icon"/>
-        <input type="text" className="movies__search-input" placeholder="Фильм" required></input>
+        <input onChange={saveInputChange} type="text" className="movies__search-input" placeholder="Фильм" value={inputState} required></input>
         <button type="submit" className="movies__search-button">Найти</button>
     </div>
-    <FilterCheckbox></FilterCheckbox>
+    <FilterCheckbox saveCheckBoxChange={saveCheckBoxChange} checkBoxState={checkBoxState}/>
 </form>
     );
 }

@@ -25,6 +25,16 @@
 .movies__add-card-button:hover {
     opacity: .7;
 }
+.movies__card-list_visible {
+    display: none;
+}
+.movies__error-message {
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 34px;
+    margin: 150px auto 0;
+    text-align: center;
+}
 @media screen and (max-width: 980px) {
     .movies__card-list {
         padding: 132px 0 0;

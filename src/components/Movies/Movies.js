@@ -1,15 +1,22 @@
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
+import Preloader from "../Preloader/Preloader";
 
-function Movies() {
+function Movies({onSubmitFindMovies, cards, saveInputChange, saveCheckBoxChange, checkBoxState,inputState, load, cardLoadErr}) {
     return (
         <section className="movies">
-            <SearchForm></SearchForm>
-            <MoviesCardList></MoviesCardList>
+            <SearchForm onSubmitFindMovies={onSubmitFindMovies}
+                        saveInputChange={saveInputChange}
+                        saveCheckBoxChange={saveCheckBoxChange}
+                        checkBoxState={checkBoxState}
+                        inputState={inputState}
+                        load={load}
+            />
+            <Preloader load={load}/>
+            <MoviesCardList cards={cards} load={load} cardLoadErr={cardLoadErr}></MoviesCardList>
         </section>
 
-//TODO <Preloader />
-// <MoviesCard />
+
 
     );
 }
