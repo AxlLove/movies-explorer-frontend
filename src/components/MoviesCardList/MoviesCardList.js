@@ -12,10 +12,10 @@ function MoviesCardList ({cards, load, cardLoadErr}) {
     const [showMore,setShowMore] = useState(true);
 
     const [list,setList] = useState(cards.slice(0, LIMIT))
-    const [index,setIndex] = useState(cardsAdds);
+    const [index,setIndex] = useState(LIMIT);
 
     const loadMore = () =>{
-        const newIndex = index + LIMIT
+        const newIndex = index + 3
         const newShowMore = newIndex < (LENGTH - 1);
         const newList = list.concat(cards.slice(index, newIndex));
         setIndex(newIndex);
