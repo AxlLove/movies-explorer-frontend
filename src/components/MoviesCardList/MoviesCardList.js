@@ -1,27 +1,61 @@
 import { Route } from "react-router-dom";
 import { Switch } from "react-router-dom";
 import MoviesCard from "../MoviesCard/MoviesCard";
-import Preloader from "../Preloader/Preloader";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 function MoviesCardList ({cards, load, cardLoadErr}) {
-    const LENGTH = cards.length;
-    const LIMIT = 9;
-    const cardsAdds = 3;
 
-    const [showMore,setShowMore] = useState(true);
+    const [list, setList] = useState([])
+    const [visible, setVisible] = useState(0)
+    const [loadMoreButton, setLoadMore] = useState(false)
 
-    const [list,setList] = useState(cards.slice(0, LIMIT))
-    const [index,setIndex] = useState(LIMIT);
+    const [width, setWidth] = React.useState(window.innerWidth);
 
-    const loadMore = () =>{
-        const newIndex = index + 3
-        const newShowMore = newIndex < (LENGTH - 1);
-        const newList = list.concat(cards.slice(index, newIndex));
-        setIndex(newIndex);
-        setList(newList);
-        setShowMore(newShowMore);
+React.useEffect(() => {
+    const handleResizeWindow = () => setWidth(window.innerWidth);
+     window.addEventListener("resize", ()=>{
+         setTimeout(handleResizeWindow, 500)
+     });
+   }, [width]);
+   
+   function hWidth () {
+    let cardVisible
+    if (width>=1050) {
+      return  cardVisible=9
     }
+    if (width<1050 && width>=600) {
+        return  cardVisible=8
+    } 
+    if (width<600){
+        return cardVisible=5
+    } 
+   }
+    useEffect(()=> {
+      const cardVisible = hWidth()
+        setList(cards)
+        setVisible(cardVisible)
+    },[cards])
+
+    const loadMore = () => {
+        let addCards
+        if (width>=1050) {
+            addCards=3
+        }
+        if (width<1050 && width>=600) {
+            addCards=2
+        }
+        if (width<600){
+            addCards=1
+        } 
+        setVisible(visible + addCards)
+    }
+    useEffect(()=> {
+        const morVis = list.length>visible
+        setLoadMore(morVis)  
+    },[visible, list])
+
+
+
     return (
         <Switch>
             <Route path="/movies">
@@ -32,23 +66,31 @@ function MoviesCardList ({cards, load, cardLoadErr}) {
                     <>
                         <ul className={`movies__card-list ${load ? 'movies__card-list_visible': ''}`}>
                             {
-                                list.map(card => (
+                                list.slice(0, visible).map(card => (
                                     <MoviesCard card={card} key={card.id}/>
                                 ))
                             }
                         </ul>
-                        {showMore && <button onClick={loadMore} type="button" className="movies__add-card-button">Еще</button>}
+                        {loadMoreButton && <button onClick={loadMore}  type="button" className="movies__add-card-button">Еще</button>}
                     </>
 }
             </Route>
             <Route path="/saved-movies">
-                <ul className={`movies__card-list ${load ? 'movies__card-list_visible': ''}`}>
-                    <MoviesCard></MoviesCard>
-                    <MoviesCard></MoviesCard>
-                    <MoviesCard></MoviesCard>
-                    <MoviesCard></MoviesCard>
-                </ul>
-                <button type="button" className="movies__add-card-button">Еще</button>
+            {cardLoadErr ?
+                    <p className="movies__error-message">Возможно, проблема с соединением или сервер недоступен.
+                        Подождите немного и попробуйте ещё раз</p>
+                    :
+                    <>
+                        <ul className={`movies__card-list ${load ? 'movies__card-list_visible': ''}`}>
+                            {
+                                list.slice(0, visible).map(card => (
+                                    <MoviesCard card={card} key={card.id}/>
+                                ))
+                            }
+                        </ul>
+                        {loadMoreButton && <button onClick={loadMore}  type="button" className="movies__add-card-button">Еще</button>}
+                    </>
+}
             </Route>
         </Switch>
  )

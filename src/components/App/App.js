@@ -11,7 +11,7 @@ import Profile from '../Profile/Profile';
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
-import {slice,concat} from 'lodash'
+import { mainApi } from '../../utils/MainApi';
 
 
 function App() {
@@ -20,6 +20,7 @@ function App() {
     const [inputState, setInputState] = useState('')
     const [load, setLoad] = useState(false)
     const [cardLoadErr, setCardLoadErr] = useState(false)
+    const [liked, setLiked] = useState(false)
 
     function onSubmitFindMovies () {
         setCardLoadErr(false)
@@ -27,12 +28,12 @@ function App() {
         MoviesApi.getFilms().then((res)=> {
             setCards(res)
 }).then(()=>{
-                // console.log('submit=>', cards)
-                // localStorage.setItem("filter", JSON.stringify({
-                //     input: inputState,
-                //     checkBox: checkBoxState,
-                //     cardsList: cards,
-                // }))
+                 console.log('submit=>', cards)
+                 localStorage.setItem("filter", JSON.stringify({
+                     input: inputState,
+                     checkBox: checkBoxState,
+                     cardsList: cards,
+                 }))
             })
                 .catch(err=>{
                     console.log(err)
@@ -42,19 +43,16 @@ function App() {
                 setLoad(false)
             })
 }
-    // useEffect(()=> {
-    //  const savedFilter = JSON.parse(localStorage.getItem('filter'))
-    //     if (savedFilter===null) {
-    //         return
-    //     }
-    //     setCards(savedFilter.cardsList)
-    //     setCheckBoxState(savedFilter.checkBox)
-    //     setInputState(savedFilter.input)
-    //     console.log(savedFilter)
-    //     console.log(savedFilter.checkBox)
-    //     console.log(savedFilter.input)
-    //
-    // },[])
+     useEffect(()=> {
+      const savedFilter = JSON.parse(localStorage.getItem('filter'))
+         if (savedFilter===null) {
+             return
+         }
+         setCards(savedFilter.cardsList)
+         setCheckBoxState(savedFilter.checkBox)
+         setInputState(savedFilter.input)
+    
+     },[])
 
     function saveInputChange (e) {
         setInputState(e.target.value)
@@ -62,7 +60,9 @@ function App() {
     function saveCheckBoxChange (e) {
         setCheckBoxState(e.target.checked)
     }
-
+    // function showSavedMovies () {
+    //     mainApi.getSavedFilms().then(res)
+    // }
 
 
 
@@ -93,7 +93,14 @@ function App() {
           <Route path='/saved-movies' >
               <div className="page">
                   <Header loggedIn={true} isMain={false}></Header>
-                  <SavedMovies></SavedMovies>
+                  <SavedMovies cards={cards}
+                          onSubmitFindMovies={onSubmitFindMovies}
+                          saveInputChange={saveInputChange}
+                          saveCheckBoxChange={saveCheckBoxChange}
+                          checkBoxState={checkBoxState}
+                          inputState={inputState}
+                          load={load}
+                          cardLoadErr={cardLoadErr} ></SavedMovies>
                   <Footer/>
               </div>
           </Route>  
