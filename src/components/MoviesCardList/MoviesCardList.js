@@ -3,7 +3,7 @@ import { Switch } from "react-router-dom";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import React, {useEffect, useState} from "react";
 
-function MoviesCardList ({cards, load, cardLoadErr}) {
+function MoviesCardList ({cards, load, cardLoadErr, handleCardDelete,saveMovie}) {
 
     const [list, setList] = useState([])
     const [visible, setVisible] = useState(0)
@@ -67,7 +67,7 @@ React.useEffect(() => {
                         <ul className={`movies__card-list ${load ? 'movies__card-list_visible': ''}`}>
                             {
                                 list.slice(0, visible).map(card => (
-                                    <MoviesCard card={card} key={card.id}/>
+                                    <MoviesCard card={card} key={card.id} saveMovie={saveMovie}/>
                                 ))
                             }
                         </ul>
@@ -84,7 +84,7 @@ React.useEffect(() => {
                         <ul className={`movies__card-list ${load ? 'movies__card-list_visible': ''}`}>
                             {
                                 list.slice(0, visible).map(card => (
-                                    <MoviesCard card={card} key={card.id}/>
+                                    <MoviesCard card={card} handleCardDelete={handleCardDelete} key={card.id}/>
                                 ))
                             }
                         </ul>

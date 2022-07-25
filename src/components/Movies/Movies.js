@@ -2,7 +2,7 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 
-function Movies({onSubmitFindMovies, cards, saveInputChange, saveCheckBoxChange, checkBoxState,inputState, load, cardLoadErr}) {
+function Movies({onSubmitFindMovies, cards, saveInputChange, saveCheckBoxChange, checkBoxState,inputState, load, cardLoadErr,saveMovie}) {
     return (
         <section className="movies">
             <SearchForm onSubmitFindMovies={onSubmitFindMovies}
@@ -13,7 +13,7 @@ function Movies({onSubmitFindMovies, cards, saveInputChange, saveCheckBoxChange,
                         load={load}
             />
             <Preloader load={load}/>
-            <MoviesCardList cards={cards} load={load} cardLoadErr={cardLoadErr}></MoviesCardList>
+            <MoviesCardList cards={cards} load={load} cardLoadErr={cardLoadErr} saveMovie={saveMovie}></MoviesCardList>
         </section>
 
 

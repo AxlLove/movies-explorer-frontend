@@ -55,6 +55,9 @@
     background-color: white;
     cursor: pointer;
 }
+.profile__button:hover {
+    opacity: .7;
+}
 .profile__button_type_log-out {
     color: #FF004D;
     font-weight: 500;

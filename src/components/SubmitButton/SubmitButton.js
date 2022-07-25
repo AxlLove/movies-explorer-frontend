@@ -1,7 +1,8 @@
-function SubmitButton ({buttonName}) {
+function SubmitButton ({buttonName, successfully, errMessage}) {
+
     return (
         <>
-        <span className="submit-button__error-mesage submit-button__error-mesage_visible">При обновлении профиля произошла ошибка.</span>
+         <span className={`submit-button__error-mesage ${successfully?'submit-button__error-mesage_visible' : ''}`}>{errMessage}</span>
         <button  type="submit" className="submit-button">{buttonName}</button>
         </>
     )

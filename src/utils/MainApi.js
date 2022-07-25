@@ -4,13 +4,14 @@ class MainApi {
     }
     _getResponsiveData(res) {
         if (!res.ok) {
-            return Promise.reject(`Ошибка ${res.status}`);
+            return Promise.reject(res.status);
         }
         return res.json();
     }
     get _headers() {
         return {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${localStorage.getItem("jwt")}`,
         }
     }
 
@@ -37,15 +38,15 @@ class MainApi {
         })
         .then(res=>this._getResponsiveData(res))
     }
-    saveFilm ({country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, movieId}) {
+    saveFilm ({country, director, duration, year, description, image, trailerLink, nameRU, nameEN, thumbnail, movieId}) {
         return fetch(`${this._url}/movies`,{
             headers: this._headers,
             method: 'POST',
-            body: JSON.stringify({country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, movieId})
+            body: JSON.stringify({country, director, duration, year, description, image, trailerLink, nameRU, nameEN, thumbnail, movieId})
         })
         .then(res=>this._getResponsiveData(res))
     }
-    deliteSavedFilm (id) {
+    deleteSavedFilm (id) {
         return fetch(`${this._url}/movies/${id}`,{
             headers: this._headers,
             method: 'DELETE',
@@ -55,7 +56,9 @@ class MainApi {
 
     register ({name, email, password}) {
         return fetch(`${this._url}/signup`,{
-            headers: this._headers,
+            headers: {
+                'Content-Type': 'application/json',
+            },
             method: 'POST',
             body: JSON.stringify({name, email, password})
         })
@@ -63,7 +66,9 @@ class MainApi {
     }
     login ({email, password}) {
         return fetch(`${this._url}/signin`,{
-            headers: this._headers,
+            headers: {
+                'Content-Type': 'application/json',
+            },
             method: 'POST',
             body: JSON.stringify({email, password})
         })

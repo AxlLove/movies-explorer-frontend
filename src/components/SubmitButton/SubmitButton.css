@@ -28,10 +28,10 @@
     text-align: center;
     color: #FF004C;
     margin: 0 auto 20px;
-    visibility: hidden;
+    visibility: visible;
 }
 .submit-button__error-mesage_visible {
-    visibility: visible;
+    visibility: hidden;
 }
 @media screen and (max-width: 750px) {
     .submit-button {
