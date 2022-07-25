@@ -67,7 +67,14 @@
     margin: 220px auto 70px;
     flex-direction: column;
     gap: 16px;
+    align-items: center;
 }
+.profile__info-current_type_input {
+    border: none;
+    text-align: right;
+    outline: none;
+}
+
 @media screen and (max-width: 980px) {
     .profile {
         margin: 0 auto;

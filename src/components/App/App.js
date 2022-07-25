@@ -98,7 +98,12 @@ function App() {
         })
     }
 
-
+    function updateProfile (data) {
+        mainApi.updateProfile(data).then(res=>{
+            console.log(res)
+            setUserParams(res)
+        })
+    }
     //auth
     const handleRegister = (name, email, password) => {
         return mainApi
@@ -208,7 +213,8 @@ function App() {
               <ProtectedRoute loggedIn={loggedIn} path='/profile'>
                   <div className="page">
                       <Header loggedIn={loggedIn} isMain={false}/>
-                      <Profile handleSignOut={handleSignOut}/>
+                      <Profile handleSignOut={handleSignOut}
+                      updateProfile={updateProfile}/>
                   </div>
               </ProtectedRoute>
 
