@@ -1,33 +1,26 @@
 import React, {useEffect, useState} from "react";
 import {UserContext} from "../../contexts/UserContext";
 import SubmitButton from "../SubmitButton/SubmitButton";
+import {useFormWithValidation} from "../../utils/useFormWithValidation";
 function Profile ({handleSignOut,updateProfile}) {
     const [redact, setRedact] = useState(true)
     const currentUser = React.useContext(UserContext);
 
-    const [state, setState] = useState({
-        name: '',
-        email: '',
-    })
+    const formValidation = useFormWithValidation()
+
     useEffect(()=>{
-        setState({
+        formValidation.setValues({
             name: currentUser.name,
             email: currentUser.email,
         })
     },[currentUser,redact])
-    const handleChange = (e) => {
-        const {name, value} = e.target
-        setState((prev)=>({
-            ...prev,
-            [name]:value,
-        }))
-    }
+
 
     const readctProfile = ()=> {
         setRedact(false)
     }
     const onSubmit = (e)=> {
-        const {name, email} = state;
+        const {name, email} = formValidation.values;
         e.preventDefault()
         updateProfile({name, email})
         setRedact(true)
@@ -60,17 +53,25 @@ function Profile ({handleSignOut,updateProfile}) {
                 <>
                 <form onSubmit={onSubmit}>
                 <div className="profile__info-container">
-                <label className="profile__info">
-                    <span className="profile__info-type">Имя</span>
-                    <input name="name" onChange={handleChange} value={state.name}  className="profile__info-current profile__info-current_type_input"></input>
+                <label className="profile__info profile__info_type_form">
+                    <div className='profile__info-block' >
+                        <span className="profile__info-type">Имя</span>
+                        <input name="name" onChange={formValidation.handleChange} value={formValidation.values.name}  className="profile__info-current profile__info-current_type_input" type={"text"} required minLength={2} maxLength={32}></input>
+                    </div>
+                    <span className={`auth-form__error-message auth-form__error-message_type_profile ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.name}</span>
                 </label>
-                <label className="profile__info">
-                    <span className="profile__info-type">E-mail</span>
-                    <input name="email" onChange={handleChange}value={state.email}   className="profile__info-current profile__info-current_type_input"></input>
+                <label className="profile__info profile__info_type_form">
+
+                    <div className='profile__info-block'>
+                        <span className="profile__info-type">E-mail</span>
+                        <input name="email" onChange={formValidation.handleChange} value={formValidation.values.email} type={"email"} required className="profile__info-current profile__info-current_type_input"></input>
+                    </div>
+                    <span className={`auth-form__error-message ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.email}</span>
+
                 </label>
             </div>
                 <div className="profile__buttons">
-                    <SubmitButton buttonName={"Сохранить"}></SubmitButton>
+                    <SubmitButton isValid={formValidation.isValid} buttonName={"Сохранить"}></SubmitButton>
                 </div>
                 </form>
                 </>

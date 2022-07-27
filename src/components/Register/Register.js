@@ -1,49 +1,44 @@
 import { Link } from "react-router-dom";
 import SubmitButton from "../SubmitButton/SubmitButton";
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
+import {useFormWithValidation} from "../../utils/useFormWithValidation";
 
 function Register ({handleRegister, successfully}) {
-    const [state, setState] = useState({
-        name: '',
-        email: '',
-        password: ''
-    })
-    const handleChange = (e) => {
-        const {name, value} = e.target
-        setState((prev)=>({
-            ...prev,
-            [name]:value,
-        }))
-    }
+const {useInput, useValidations} = useFormWithValidation()
+
+    const formValidation = useFormWithValidation()
     const handleSubmit = (e) => {
         e.preventDefault()
-        const {name, email, password} = state
+        const {name, email, password} = formValidation.values
         handleRegister(name, email, password)
+        formValidation.resetForm()
     }
-
+   const email = useInput('')
+    const password = useInput('')
+    const name = useInput('', {isEmpty: true, minLength: 2})
     return (
         <div className="auth-form">
             <Link to="/" className="logo"/>
-            <form onSubmit={handleSubmit} className="auth-form__form">
+            <form  onSubmit={handleSubmit} className="auth-form__form" noValidate>
                 <h2 className="auth-form__title">Добро пожаловать!</h2>
                 <fieldset className="auth-form__input-container">
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">Имя</span>
-                        <input name="name" onChange={handleChange} type="text" className="auth-form__text-field" required/>
-                        <span className="auth-form__error-message">Что-то пошло не так...</span>
+                        <input value={name.value} name="name" onBlur={name.onBlur} onChange={name.onChange} type="text" className="auth-form__text-field" minLength={2} maxLength={32} required/>
+                        <span className={`auth-form__error-message ${name.dirty && name.isEmpty.value || !name.minLengthError.value? 'auth-form__error-message_visible' : ''}`}>{name.errMessage}</span>
                     </label>
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">E-mail</span>
-                        <input name="email" onChange={handleChange} type="email" className="auth-form__text-field" required/>
-                        <span className="auth-form__error-message">Что-то пошло не так...</span>
+                        <input   name="email" value={email.value} onBlur={email.onBlur} onChange={email.onChange} type="email" className="auth-form__text-field"  required/>
+                        <span className={`auth-form__error-message ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.email}</span>
                     </label>
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">Пароль</span>
-                        <input name="password" onChange={handleChange} type="password" className="auth-form__text-field" required/>
-                        <span className="auth-form__error-message auth-form__error-message_visible">Что-то пошло не так...</span>
+                        <input   name="password" value={password.value} onBlur={password.onBlur} onChange={password.onChange} type="password" className="auth-form__text-field" minLength={2} maxLength={32} required/>
+                        <span className={`auth-form__error-message ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.password}</span>
                     </label>
                 </fieldset>
-                <SubmitButton errMessage={'шибка регистрации'} successfully={successfully} buttonName="Зарегестрироваться"/>
+                <SubmitButton isValid={formValidation.isValid}  errMessage={'Ошибка регистрации'} successfully={successfully} buttonName="Зарегестрироваться"/>
                 <p className="auth-form__text">Уже зарегистрированы? <Link className="auth-form__link" to="/signin">Войти</Link></p>
             </form>
         </div>

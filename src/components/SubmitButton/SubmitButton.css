@@ -21,7 +21,10 @@
 .submit-button:hover {
     opacity: .7;
 }
-.submit-button__error-mesage {
+.submit-button_disabled:hover {
+    opacity: 1;
+}
+.submit-button__error-message {
     font-weight: 400;
     font-size: 11px;
     line-height: 13px;
@@ -30,7 +33,7 @@
     margin: 0 auto 20px;
     visibility: visible;
 }
-.submit-button__error-mesage_visible {
+.submit-button__error-message_visible {
     visibility: hidden;
 }
 @media screen and (max-width: 750px) {

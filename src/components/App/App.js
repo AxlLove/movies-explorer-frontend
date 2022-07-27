@@ -22,6 +22,7 @@ function App() {
 
     const [cards, setCards] = useState([])
     const [savedCards, setSavedCards] = useState([])
+
     const [checkBoxState, setCheckBoxState] = useState(false)
     const [inputState, setInputState] = useState('')
     const [load, setLoad] = useState(false)
@@ -87,6 +88,13 @@ function App() {
                 setLoad(false)
             })
     }
+    useEffect(()=> {
+        if(loggedIn)
+        showSavedCards ();
+        console.log('=>>', savedCards)
+    }, [loggedIn, history])
+
+
     function handleCardDelete (card) {
         mainApi.deleteSavedFilm(card._id).then((newCard)=> {
             setSavedCards((state)=> state.filter((c) =>c._id !== card._id))
@@ -94,8 +102,9 @@ function App() {
     }
     function saveMovie(movie) {
         mainApi.saveFilm(movie).then(res=> {
-            console.log(res)
+            setSavedCards([...savedCards, res])
         })
+            .catch(console.log)
     }
 
     function updateProfile (data) {
@@ -190,6 +199,8 @@ function App() {
                               load={load}
                               cardLoadErr={cardLoadErr}
                               saveMovie={saveMovie}
+                              savedCards={savedCards}
+                              handleCardDelete={handleCardDelete}
                       />
                       <Footer/>
                   </div>
@@ -249,3 +260,4 @@ export default App;
 //TODO https://habr.com/ru/company/timeweb/blog/584862/
 //TODO ошибка загрузки cards в localstorage
 // TODO делать обработку ошибок
+// TODO поработать над constants.js

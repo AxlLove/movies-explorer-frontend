@@ -49,6 +49,7 @@
     text-align: center;
     cursor: pointer;
     transition: visibility 0s, opacity 0.5s;
+    align-items: center;
 }
 .movies__card-button:hover {
     opacity: .8;
