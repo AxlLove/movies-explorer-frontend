@@ -5,51 +5,41 @@ export function useFormWithValidation() {
     const [errors, setErrors] = useState({});
     const [isValid, setIsValid] = useState(false);
 
-    const useValidations = (value, validators) => {
-        const [isEmpty, setEmpty] = useState({})
-        const [minLengthError, setMinLengthError] = useState({})
-        useEffect(()=> {
-            for (const validation in validators) {
-                switch (validation){
-                    case 'minLength':
-                        value.length < validators[validation] ?
-                            setMinLengthError({value: true, message: 'Длинна должна превышать 2 символа'})
-
-                            :
-                            setMinLengthError({value:false, message: ''})
-                        break;
-                    case  'isEmpty':
-                        value ?
-                            setEmpty({value: false, message: ''})
-                            :
-                            setEmpty({value:true, message: 'Поле не должно быть пустым'})
-                        break;
-                }
-
+        const customValidityMessage =(e)=> {
+            let message
+            switch(e.target.name) {
+                case 'name':
+                    if  (!e.target.value.match("[a-zA-Zа-яА-ЯёЁ\s-]")) {
+                        message = 'name'
+                    }
+                    else {
+                        message = e.target.validationMessage
+                    }
+                    break;
+                    case 'email': 
+                    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    if  (e.target.value.match(re)) {
+                            message = 'email'
+                    } 
+                    else {
+                        message = e.target.validationMessage
+                    }
+                    break;
+                    default :
+                    message = e.target.validationMessage
+                    break;
             }
-        },[value])
-        return {isEmpty, minLengthError}
+            return message
     }
-    const useInput  = (initialState, validator)=> {
-        const [value, setValue] = useState(initialState)
-        const [dirty, setDirty] = useState(false)
-        const valid = useValidations(value, validator)
-        const onChange = (e) => {
-            setValue(e.target.value)
-            console.log(valid)
-        }
-        const onBlur = () => {
-            setDirty(true)
-        }
-        return {onChange, onBlur, value, ...valid, dirty}
-    }
+
     const handleChange = (event) => {
         const target = event.target;
         const name = target.name;
         const value = target.value;
         setValues({...values, [name]: value});
+        console.log(event.target.validation)
         setErrors({...errors, [name]: target.validationMessage });
-        setIsValid(target.closest("form").checkValidity());
+        setIsValid(target.closest("form").checkValidity())
     };
 
 
@@ -62,5 +52,5 @@ export function useFormWithValidation() {
         [setValues, setErrors, setIsValid]
     );
 
-    return { values, handleChange, errors, isValid, resetForm, setValues, useInput, useValidations };
+    return {values, setValues, handleChange, resetForm , errors, isValid, setErrors, setIsValid};
 }

@@ -4,18 +4,15 @@ import React, {useEffect, useState} from "react"
 import {useFormWithValidation} from "../../utils/useFormWithValidation";
 
 function Register ({handleRegister, successfully}) {
-const {useInput, useValidations} = useFormWithValidation()
 
     const formValidation = useFormWithValidation()
     const handleSubmit = (e) => {
         e.preventDefault()
         const {name, email, password} = formValidation.values
         handleRegister(name, email, password)
-        formValidation.resetForm()
+        //formValidation.resetForm()
     }
-   const email = useInput('')
-    const password = useInput('')
-    const name = useInput('', {isEmpty: true, minLength: 2})
+
     return (
         <div className="auth-form">
             <Link to="/" className="logo"/>
@@ -24,17 +21,24 @@ const {useInput, useValidations} = useFormWithValidation()
                 <fieldset className="auth-form__input-container">
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">Имя</span>
-                        <input value={name.value} name="name" onBlur={name.onBlur} onChange={name.onChange} type="text" className="auth-form__text-field" minLength={2} maxLength={32} required/>
-                        <span className={`auth-form__error-message ${name.dirty && name.isEmpty.value || !name.minLengthError.value? 'auth-form__error-message_visible' : ''}`}>{name.errMessage}</span>
+                        <input onChange={formValidation.handleChange} 
+                        pattern="[a-zA-Zа-яА-ЯёЁ\s-]"
+                        name='name' 
+                        type="text"
+                        className="auth-form__text-field" 
+                        minLength={2} 
+                        maxLength={32} 
+                        required/>
+                        <span className={`auth-form__error-message ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.name}</span>
                     </label>
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">E-mail</span>
-                        <input   name="email" value={email.value} onBlur={email.onBlur} onChange={email.onChange} type="email" className="auth-form__text-field"  required/>
+                        <input onChange={formValidation.handleChange}  name="email"  type="email" className="auth-form__text-field"  required/>
                         <span className={`auth-form__error-message ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.email}</span>
                     </label>
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">Пароль</span>
-                        <input   name="password" value={password.value} onBlur={password.onBlur} onChange={password.onChange} type="password" className="auth-form__text-field" minLength={2} maxLength={32} required/>
+                        <input  onChange={formValidation.handleChange} name="password"  type="password" className="auth-form__text-field" minLength={2} maxLength={32} required/>
                         <span className={`auth-form__error-message ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.password}</span>
                     </label>
                 </fieldset>
