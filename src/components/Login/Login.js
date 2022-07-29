@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import React, {useState} from "react"
 import {useFormWithValidation} from "../../utils/useFormWithValidation";
+import {emailRegExp} from "../../utils/regExp";
 
 function Login ({handleLogin, successfully}) {
     const formValidation = useFormWithValidation()
@@ -18,12 +19,25 @@ function Login ({handleLogin, successfully}) {
                 <fieldset className="auth-form__input-container auth-form__input-container_type_login">
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">E-mail</span>
-                        <input onChange={formValidation.handleChange} name={'email'} type="email" className="auth-form__text-field" required/>
+                        <input pattern={emailRegExp}
+                               onChange={formValidation.handleChange}
+                               value={formValidation.values.email || ''}
+                               name="email"
+                               type="email"
+                               className="auth-form__text-field"
+                               required/>
                         <span className={`auth-form__error-message ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.email}</span>
                     </label>
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">Пароль</span>
-                        <input onChange={formValidation.handleChange} name={'password'} type="password" className="auth-form__text-field" minLength={2} maxLength={32} required/>
+                        <input value={formValidation.values.password || ''}
+                               onChange={formValidation.handleChange}
+                               name="password"
+                               type="password"
+                               className="auth-form__text-field"
+                               minLength={2}
+                               maxLength={32}
+                               required/>
                         <span className={`auth-form__error-message ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.password}</span>
                     </label>
                 </fieldset>

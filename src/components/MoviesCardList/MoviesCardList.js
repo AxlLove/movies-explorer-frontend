@@ -13,10 +13,13 @@ function MoviesCardList ({cards, load, cardLoadErr, handleCardDelete,saveMovie, 
     const [width, setWidth] = React.useState(window.innerWidth);
 
 React.useEffect(() => {
-    const handleResizeWindow = () => setWidth(window.innerWidth);
-     window.addEventListener("resize", ()=>{
-         setTimeout(handleResizeWindow, 500)
-     });
+    const resizeListener = ()=> {
+        return setTimeout(()=> setWidth(window.innerWidth), 200)
+    }
+     window.addEventListener("resize", resizeListener);
+    return ()=> {
+        window.removeEventListener("resize", resizeListener);
+    }
    }, [width]);
    
    function hWidth () {
@@ -68,8 +71,32 @@ React.useEffect(() => {
     }
 
     return (
-        <>
-
+        <Switch>
+            <Route  path={'/movies'}>
+                <>
+                    {cardLoadErr ?
+                        <p className="movies__error-message">Возможно, проблема с соединением или сервер недоступен.
+                            Подождите немного и попробуйте ещё раз</p>
+                        :
+                        <>
+                            <ul className={`movies__card-list ${load ? 'movies__card-list_visible': ''}`}>
+                                {
+                                    list.slice(0, visible).map(card => (
+                                        <MoviesCard isLiked={checkCard(card)}
+                                                    card={card}
+                                                    key={card.id || card.movieId}
+                                                    savedCards={savedCards}
+                                                    saveMovie={saveMovie}
+                                                    handleCardDelete={handleCardDelete}/>
+                                    ))
+                                }
+                            </ul>
+                            {loadMoreButton && <button onClick={loadMore}  type="button" className="movies__add-card-button">Еще</button>}
+                        </>
+                    }
+                </>
+            </Route>
+            <Route path={'/saved-movies'}>
                 {cardLoadErr ?
                     <p className="movies__error-message">Возможно, проблема с соединением или сервер недоступен.
                         Подождите немного и попробуйте ещё раз</p>
@@ -77,7 +104,7 @@ React.useEffect(() => {
                     <>
                         <ul className={`movies__card-list ${load ? 'movies__card-list_visible': ''}`}>
                             {
-                                list.slice(0, visible).map(card => (
+                                cards.map(card => (
                                     <MoviesCard isLiked={checkCard(card)}
                                                 card={card}
                                                 key={card.id || card.movieId}
@@ -87,11 +114,10 @@ React.useEffect(() => {
                                 ))
                             }
                         </ul>
-                        {loadMoreButton && <button onClick={loadMore}  type="button" className="movies__add-card-button">Еще</button>}
                     </>
-}
-
-        </>
+                }
+            </Route>
+        </Switch>
  )
 }
 export default MoviesCardList;

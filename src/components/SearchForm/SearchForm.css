@@ -53,6 +53,12 @@
 .movies__search-button:hover {
     opacity: .8;
 }
+.movies__search-button_disabled {
+    background: #F8F8F8;
+}
+.movies__search-button_disabled:hover {
+    opacity: 1;
+}
 @media screen and (max-width: 980px) {
     .movies__input-container {
         padding: 86px 0 15px;

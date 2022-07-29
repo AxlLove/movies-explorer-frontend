@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {UserContext} from "../../contexts/UserContext";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import {useFormWithValidation} from "../../utils/useFormWithValidation";
+import {emailRegExp, userNameRegExp} from "../../utils/regExp";
 function Profile ({handleSignOut,updateProfile}) {
     const [redact, setRedact] = useState(true)
     const currentUser = React.useContext(UserContext);
@@ -61,7 +62,16 @@ function Profile ({handleSignOut,updateProfile}) {
                 <label className="profile__info profile__info_type_form">
                     <div className='profile__info-block' >
                         <span className="profile__info-type">Имя</span>
-                        <input name="name" onChange={formValidation.handleChange} value={formValidation.values.name}  className="profile__info-current profile__info-current_type_input" type={"text"} required minLength={2} maxLength={32}></input>
+                        <input name="name"
+                               onChange={formValidation.handleChange}
+                               value={formValidation.values.name || ''}
+                               className="profile__info-current profile__info-current_type_input"
+                               type={"text"}
+                               required minLength={2}
+                               maxLength={32}
+                               pattern={userNameRegExp}
+
+                        />
                     </div>
                     <span className={`auth-form__error-message auth-form__error-message_type_profile ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.name}</span>
                 </label>
@@ -69,7 +79,13 @@ function Profile ({handleSignOut,updateProfile}) {
 
                     <div className='profile__info-block'>
                         <span className="profile__info-type">E-mail</span>
-                        <input name="email" onChange={formValidation.handleChange} value={formValidation.values.email} type={"email"} required className="profile__info-current profile__info-current_type_input"></input>
+                        <input name="email"
+                        onChange={formValidation.handleChange}
+                        value={formValidation.values.email || ''}
+                        type={"email"}
+                        pattern={emailRegExp}
+                        required
+                        className="profile__info-current profile__info-current_type_input"/>
                     </div>
                     <span className={`auth-form__error-message ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.email}</span>
 

@@ -27,7 +27,6 @@ function App() {
     const [inputState, setInputState] = useState('')
     const [load, setLoad] = useState(false)
     const [cardLoadErr, setCardLoadErr] = useState(false)
-    const [liked, setLiked] = useState(false)
 
     //auth
     const [loggedIn, setLoggedIn] = useState(false)
@@ -39,15 +38,12 @@ function App() {
         setLoad(true)
         MoviesApi.getFilms().then((res)=> {
             setCards(res)
+            localStorage.setItem("filter", JSON.stringify({
+                input: inputState,
+                checkBox: checkBoxState,
+                cardsList: res,
+            }))
         })
-            .then(()=>{
-                console.log('submit=>', cards)
-                localStorage.setItem("filter", JSON.stringify({
-                    input: inputState,
-                    checkBox: checkBoxState,
-                    cardsList: cards,
-                }))
-            })
             .catch(err=>{
                 console.log(err)
                 setCardLoadErr(true)
@@ -57,15 +53,18 @@ function App() {
             })
 }
      useEffect(()=> {
-      const savedFilter = JSON.parse(localStorage.getItem('filter'))
-         if (savedFilter===null) {
-             return
+         if(loggedIn) {
+             const savedFilter = JSON.parse(localStorage.getItem('filter'))
+             if (!savedFilter) {
+                 console.log('filter', savedFilter)
+                 return
+             }
+             console.log('filter', savedFilter)
+             setCards(savedFilter.cardsList)
+             setCheckBoxState(savedFilter.checkBox)
+             setInputState(savedFilter.input)
          }
-         setCards(savedFilter.cardsList)
-         setCheckBoxState(savedFilter.checkBox)
-         setInputState(savedFilter.input)
-    
-     },[])
+     },[loggedIn, history])
 
     function saveInputChange (e) {
         setInputState(e.target.value)
@@ -79,6 +78,7 @@ function App() {
         setLoad(true)
         mainApi.getSavedFilms().then(res=> {
             setSavedCards(res)
+            localStorage.setItem('savedCards', JSON.stringify(res))
         })
             .catch(err=>{
                 console.log(err)
@@ -89,10 +89,22 @@ function App() {
             })
     }
     useEffect(()=> {
-        if(loggedIn)
-        showSavedCards ();
-        console.log('=>>', savedCards)
-    }, [loggedIn, history])
+        if (loggedIn) {
+            const localSavedCards = JSON.parse(localStorage.getItem('savedCards'))
+            console.log(localSavedCards)
+            if(localSavedCards) {
+                try {
+                    setSavedCards(localSavedCards)
+                } catch (err) {
+                    localStorage.removeItem('savedCards')
+                    showSavedCards ()
+                }
+            }
+            else {
+                showSavedCards ()
+            }
+        }
+        }, [loggedIn, history])
 
 
     function handleCardDelete (card) {
@@ -172,7 +184,13 @@ function App() {
 
     function handleSignOut (){
         localStorage.removeItem('jwt')
+        localStorage.removeItem('filter')
+        localStorage.removeItem('savedCards')
+        setCards([])
+        setCheckBoxState(false)
+        setInputState('')
         setLoggedIn(false)
+        setSavedCards([])
     }
 
 

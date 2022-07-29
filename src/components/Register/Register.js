@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import React, {useEffect, useState} from "react"
 import {useFormWithValidation} from "../../utils/useFormWithValidation";
+import {userNameRegExp, emailRegExp} from "../../utils/regExp";
 
 function Register ({handleRegister, successfully}) {
 
@@ -10,7 +11,7 @@ function Register ({handleRegister, successfully}) {
         e.preventDefault()
         const {name, email, password} = formValidation.values
         handleRegister(name, email, password)
-        //formValidation.resetForm()
+        formValidation.resetForm()
     }
 
     return (
@@ -21,11 +22,12 @@ function Register ({handleRegister, successfully}) {
                 <fieldset className="auth-form__input-container">
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">Имя</span>
-                        <input onChange={formValidation.handleChange} 
-                        pattern="[a-zA-Zа-яА-ЯёЁ\s-]"
-                        name='name' 
+                        <input onChange={formValidation.handleChange}
+                               value={formValidation.values.name || ''}
+                        pattern={userNameRegExp}
+                        name='name'
                         type="text"
-                        className="auth-form__text-field" 
+                        className="auth-form__text-field"
                         minLength={2} 
                         maxLength={32} 
                         required/>
@@ -33,12 +35,25 @@ function Register ({handleRegister, successfully}) {
                     </label>
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">E-mail</span>
-                        <input onChange={formValidation.handleChange}  name="email"  type="email" className="auth-form__text-field"  required/>
+                        <input pattern={emailRegExp}
+                               onChange={formValidation.handleChange}
+                               value={formValidation.values.email || ''}
+                               name="email"
+                               type="email"
+                               className="auth-form__text-field"
+                               required/>
                         <span className={`auth-form__error-message ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.email}</span>
                     </label>
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">Пароль</span>
-                        <input  onChange={formValidation.handleChange} name="password"  type="password" className="auth-form__text-field" minLength={2} maxLength={32} required/>
+                        <input value={formValidation.values.password || ''}
+                               onChange={formValidation.handleChange}
+                               name="password"
+                               type="password"
+                               className="auth-form__text-field"
+                               minLength={2}
+                               maxLength={32}
+                               required/>
                         <span className={`auth-form__error-message ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.password}</span>
                     </label>
                 </fieldset>
