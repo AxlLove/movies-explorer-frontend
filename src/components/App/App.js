@@ -17,6 +17,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import {UserContext} from "../../contexts/UserContext";
 
 
+
 function App() {
     const [userParams, setUserParams] = useState({})
 
@@ -30,7 +31,7 @@ function App() {
 
     //auth
     const [loggedIn, setLoggedIn] = useState(false)
-    const [successfully, setSuccessfully] = useState(true)
+    const [submitErrMessage, setSubmitErrMessage] = useState({})
 
     const history = useHistory()
     function onSubmitFindMovies () {
@@ -120,31 +121,38 @@ function App() {
     }
 
     function updateProfile (data) {
+        setSubmitErrMessage({})
         mainApi.updateProfile(data).then(res=>{
-            console.log(res)
             setUserParams(res)
+        }).catch(err=>{
+            if (err === 409){
+                setSubmitErrMessage({err:true, message: 'Такой email уже занят'})
+            }
+            else {
+                setSubmitErrMessage({err:true, message: 'При регистрации пользователя произошла ошибка'})
+            }
         })
     }
     //auth
     const handleRegister = (name, email, password) => {
+        setSubmitErrMessage({})
         return mainApi
             .register({name, email, password})
             .then(()=>{
-                    setSuccessfully(true)
-                }
-            )
-            .then(()=>{
-                if (successfully) {
                     history.push('/signin')
-                }
             })
-            .catch(res=>{
-                console.log('=>',res)
-                setSuccessfully(false)
+            .catch(err=>{
+                if (err === 409){
+                    setSubmitErrMessage({err:true, message: 'Такой email уже занят'})
+                }
+                else {
+                    setSubmitErrMessage({err:true, message: 'При регистрации пользователя произошла ошибка'})
+                }
             })
     }
 
     const handleLogin = (email, password) => {
+        setSubmitErrMessage({})
         return mainApi.login({email, password})
             .then((data)=>{
                 if(!data.token){
@@ -153,9 +161,13 @@ function App() {
                 localStorage.setItem("jwt", data.token)
                 setLoggedIn(true)
             })
-            .catch(res=>{
-                console.log(res)
-                setSuccessfully(false)
+            .catch(err=>{
+                if (err === 401){
+                    setSubmitErrMessage({err:true, message: 'Вы ввели неправильный логин или пароль'})
+                }
+                else {
+                    setSubmitErrMessage({err:true, message: 'На сервере произошла шибка'})
+                }
             })
     }
 
@@ -181,6 +193,10 @@ function App() {
             return;
         }
     }, [loggedIn])
+
+    useEffect(()=>{
+        setSubmitErrMessage({})
+    },[])
 
     function handleSignOut (){
         localStorage.removeItem('jwt')
@@ -243,7 +259,10 @@ function App() {
                   <div className="page">
                       <Header loggedIn={loggedIn} isMain={false}/>
                       <Profile handleSignOut={handleSignOut}
-                      updateProfile={updateProfile}/>
+                      updateProfile={updateProfile}
+                      submitErrMessage={submitErrMessage}
+                      setSubmitErrMessage={setSubmitErrMessage}
+                      />
                   </div>
               </ProtectedRoute>
 
@@ -251,14 +270,17 @@ function App() {
           <Route path='/signup'>
               <div className="page">
                   <Register handleRegister={handleRegister}
-                            successfully={successfully}/>
+                            submitErrMessage = {submitErrMessage}
+                            setSubmitErrMessage={setSubmitErrMessage}/>
+                            
               </div>
           </Route>
           <Route path='/signin'>
               <div className="page">
                   <Login
                       handleLogin={handleLogin}
-                      successfully={successfully}
+                      submitErrMessage = {submitErrMessage}
+                      setSubmitErrMessage={setSubmitErrMessage}
                   />
               </div>
           </Route>

@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react"
 import {useFormWithValidation} from "../../utils/useFormWithValidation";
 import {userNameRegExp, emailRegExp} from "../../utils/regExp";
 
-function Register ({handleRegister, successfully}) {
+function Register ({handleRegister, submitErrMessage, setSubmitErrMessage}) {
 
     const formValidation = useFormWithValidation()
     const handleSubmit = (e) => {
@@ -13,6 +13,9 @@ function Register ({handleRegister, successfully}) {
         handleRegister(name, email, password)
         formValidation.resetForm()
     }
+    useEffect(()=>{
+        setSubmitErrMessage({})
+    },[])
 
     return (
         <div className="auth-form">
@@ -57,7 +60,7 @@ function Register ({handleRegister, successfully}) {
                         <span className={`auth-form__error-message ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.password}</span>
                     </label>
                 </fieldset>
-                <SubmitButton isValid={formValidation.isValid}  errMessage={'Ошибка регистрации'} successfully={successfully} buttonName="Зарегестрироваться"/>
+                <SubmitButton isValid={formValidation.isValid}  errMessage={submitErrMessage} buttonName="Зарегестрироваться"/>
                 <p className="auth-form__text">Уже зарегистрированы? <Link className="auth-form__link" to="/signin">Войти</Link></p>
             </form>
         </div>

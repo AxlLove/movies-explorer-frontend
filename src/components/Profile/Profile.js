@@ -3,11 +3,14 @@ import {UserContext} from "../../contexts/UserContext";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import {useFormWithValidation} from "../../utils/useFormWithValidation";
 import {emailRegExp, userNameRegExp} from "../../utils/regExp";
-function Profile ({handleSignOut,updateProfile}) {
+function Profile ({handleSignOut,updateProfile,submitErrMessage,setSubmitErrMessage}) {
     const [redact, setRedact] = useState(true)
     const currentUser = React.useContext(UserContext);
 
     const formValidation = useFormWithValidation()
+    useEffect(()=>{
+        setSubmitErrMessage({})
+    },[])
 
     useEffect(()=>{
         formValidation.setValues({
@@ -16,7 +19,7 @@ function Profile ({handleSignOut,updateProfile}) {
         })
     },[currentUser,redact])
     useEffect(()=>{
-        if(formValidation.values.name && formValidation.values.email !== undefined ) {
+        if (formValidation.values.name && formValidation.values.email !== undefined ) {
             formValidation.setIsValid(true)
         }
     }, [redact])
@@ -24,6 +27,7 @@ function Profile ({handleSignOut,updateProfile}) {
     const readctProfile = (e)=> {
         setRedact(false)
         formValidation.setIsValid()
+        setSubmitErrMessage({})
     }
     const onSubmit = (e)=> {
         const {name, email} = formValidation.values;
@@ -50,6 +54,7 @@ function Profile ({handleSignOut,updateProfile}) {
                 </li>
             </ul>
                 <div className="profile__buttons">
+                    <span className={`submit-button__error-message ${!submitErrMessage.err?'submit-button__error-message_visible' : ''}`}>{submitErrMessage.message}</span>
                     <button onClick={readctProfile}  type="button" className="profile__button">Редактировать</button>
                     <button onClick={handleSignOut} type="button" className="profile__button profile__button_type_log-out">Выйти из аккаунта</button>
                 </div>
@@ -92,7 +97,10 @@ function Profile ({handleSignOut,updateProfile}) {
                 </label>
             </div>
                 <div className="profile__buttons">
-                    <SubmitButton isValid={formValidation.isValid} buttonName={"Сохранить"}></SubmitButton>
+                    <SubmitButton
+                    errMessage={submitErrMessage}
+                     isValid={formValidation.isValid}
+                      buttonName={"Сохранить"}/>
                 </div>
                 </form>
                 </>

@@ -1,16 +1,19 @@
 import { Link } from "react-router-dom";
 import SubmitButton from "../SubmitButton/SubmitButton";
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {useFormWithValidation} from "../../utils/useFormWithValidation";
 import {emailRegExp} from "../../utils/regExp";
 
-function Login ({handleLogin, successfully}) {
+function Login ({handleLogin, successfully, submitErrMessage, setSubmitErrMessage}) {
     const formValidation = useFormWithValidation()
     const handleSubmit = (e) => {
         e.preventDefault()
         const {email, password} = formValidation.values
         handleLogin(email, password)
     }
+    useEffect(()=>{
+        setSubmitErrMessage({})
+    },[])
     return (
         <div className="auth-form">
             <Link to="/" className="logo"/>
@@ -41,7 +44,9 @@ function Login ({handleLogin, successfully}) {
                         <span className={`auth-form__error-message ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.password}</span>
                     </label>
                 </fieldset>
-                <SubmitButton isValid={formValidation.isValid} errMessage={'Ошибка входа'} successfully={successfully} buttonName="Войти"/>
+                <SubmitButton isValid={formValidation.isValid}
+                 errMessage={submitErrMessage}
+                   buttonName="Войти"/>
                 <p className="auth-form__text">Ещё не зарегистрированы? <Link className="auth-form__link" to="/signup">Регистрация</Link></p>
             </form>
         </div>
