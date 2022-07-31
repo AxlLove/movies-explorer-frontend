@@ -36,6 +36,18 @@
 .submit-button__error-message_visible {
     visibility: hidden;
 }
+.submit-button__success-message {
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: center;
+    color: #32ab1d;
+    margin: 0 auto 20px;
+    visibility: visible;
+}
+.submit-button__success-message_visible {
+    visibility: hidden;
+}
 @media screen and (max-width: 750px) {
     .submit-button {
         width: 260px;

@@ -110,6 +110,10 @@ React.useEffect(() => {
                     <p className="movies__error-message">Возможно, проблема с соединением или сервер недоступен.
                         Подождите немного и попробуйте ещё раз</p>
                     :
+
+                    notFound?
+                    <p className={`movies__error-message ${notFound? 'movies__error-message_visible': ''}`}>Ничего не найдено</p>
+                        :
                     <>
                         <ul className={`movies__card-list ${load ? 'movies__card-list_visible': ''}`}>
                             {

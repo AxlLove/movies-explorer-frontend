@@ -3,14 +3,11 @@ import {UserContext} from "../../contexts/UserContext";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import {useFormWithValidation} from "../../utils/useFormWithValidation";
 import {emailRegExp, userNameRegExp} from "../../utils/regExp";
-function Profile ({handleSignOut,updateProfile,submitErrMessage,setSubmitErrMessage}) {
+function Profile ({handleSignOut,updateProfile,submitErrMessage, successful,submitButtonDisabled}) {
     const [redact, setRedact] = useState(true)
     const currentUser = React.useContext(UserContext);
 
     const formValidation = useFormWithValidation()
-    useEffect(()=>{
-        setSubmitErrMessage({})
-    },[])
 
     useEffect(()=>{
         formValidation.setValues({
@@ -27,7 +24,6 @@ function Profile ({handleSignOut,updateProfile,submitErrMessage,setSubmitErrMess
     const readctProfile = (e)=> {
         setRedact(false)
         formValidation.setIsValid()
-        setSubmitErrMessage({})
     }
     const onSubmit = (e)=> {
         const {name, email} = formValidation.values;
@@ -55,6 +51,7 @@ function Profile ({handleSignOut,updateProfile,submitErrMessage,setSubmitErrMess
             </ul>
                 <div className="profile__buttons">
                     <span className={`submit-button__error-message ${!submitErrMessage.err?'submit-button__error-message_visible' : ''}`}>{submitErrMessage.message}</span>
+                    <span className={`submit-button__success-message ${!successful ?'submit-button__success-message_visible' : ''}`}>{'Профиль успешно обновлен'}</span>
                     <button onClick={readctProfile}  type="button" className="profile__button">Редактировать</button>
                     <button onClick={handleSignOut} type="button" className="profile__button profile__button_type_log-out">Выйти из аккаунта</button>
                 </div>
@@ -67,7 +64,8 @@ function Profile ({handleSignOut,updateProfile,submitErrMessage,setSubmitErrMess
                 <label className="profile__info profile__info_type_form">
                     <div className='profile__info-block' >
                         <span className="profile__info-type">Имя</span>
-                        <input name="name"
+                        <input disabled={!submitButtonDisabled}
+                               name="name"
                                onChange={formValidation.handleChange}
                                value={formValidation.values.name || ''}
                                className="profile__info-current profile__info-current_type_input"
@@ -84,7 +82,7 @@ function Profile ({handleSignOut,updateProfile,submitErrMessage,setSubmitErrMess
 
                     <div className='profile__info-block'>
                         <span className="profile__info-type">E-mail</span>
-                        <input name="email"
+                        <input disabled={!submitButtonDisabled} name="email"
                         onChange={formValidation.handleChange}
                         value={formValidation.values.email || ''}
                         type={"email"}

@@ -3,12 +3,12 @@ import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import {useEffect} from "react"
 
-function SavedMovies({onSubmitFindMovies, cards, saveInputChange, saveCheckBoxChange, checkBoxState,inputState, load, cardLoadErr,handleCardDelete, loadSavedCards}) {
+function SavedMovies({onSubmitFindMovies, cards, saveInputChange, saveCheckBoxChange, checkBoxState,inputState, load, cardLoadErr,handleCardDelete, loadSavedCards, notFound}) {
 
-    // useEffect(()=> {
-    //     loadSavedCards()
-    //     console.log('movies')
-    // }, [])
+    useEffect(()=> {
+        loadSavedCards()
+        console.log('movies')
+    }, [])
     return (
         <section className="movies">
             <SearchForm saveInputChange={saveInputChange}
@@ -22,7 +22,8 @@ function SavedMovies({onSubmitFindMovies, cards, saveInputChange, saveCheckBoxCh
                             cards={cards}
                             load={load}
                             cardLoadErr={cardLoadErr}
-                            handleCardDelete={handleCardDelete}/>
+                            handleCardDelete={handleCardDelete}
+                                notFound={notFound}/>
         </section>
 
     );

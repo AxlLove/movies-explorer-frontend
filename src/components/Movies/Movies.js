@@ -4,10 +4,10 @@ import Preloader from "../Preloader/Preloader";
 import {useEffect} from "react";
 
 function Movies({onSubmitFindMovies, cards, saveInputChange, saveCheckBoxChange, checkBoxState,inputState, load, cardLoadErr,saveMovie,savedCards,handleCardDelete, notFound, loadSavedCards, allSavedCards}) {
-    // useEffect(()=> {
-    //     loadSavedCards()
-    //     console.log('movies')
-    // }, [])
+    useEffect(()=> {
+        loadSavedCards()
+        console.log('movies')
+    }, [])
 
     return (
         <section className="movies">

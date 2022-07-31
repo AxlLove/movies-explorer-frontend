@@ -1,3 +1,4 @@
+import {MOVIES_MY_API_URL} from "./constants";
 class MainApi {
     constructor(data) {
         this._url = data.url;
@@ -76,4 +77,4 @@ class MainApi {
     }
 }
 
-export  const mainApi = new MainApi({url: 'https://api.diplom-me.nomoreparties.sbs',})
+export  const mainApi = new MainApi({url: MOVIES_MY_API_URL,})

@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react"
 import {useFormWithValidation} from "../../utils/useFormWithValidation";
 import {userNameRegExp, emailRegExp} from "../../utils/regExp";
 
-function Register ({handleRegister, submitErrMessage, setSubmitErrMessage}) {
+function Register ({handleRegister, submitErrMessage, setSubmitErrMessage,submitButtonDisabled}) {
 
     const formValidation = useFormWithValidation()
     const handleSubmit = (e) => {
@@ -12,20 +12,22 @@ function Register ({handleRegister, submitErrMessage, setSubmitErrMessage}) {
         const {name, email, password} = formValidation.values
         handleRegister(name, email, password)
         formValidation.resetForm()
+        console.log(submitButtonDisabled)
     }
     useEffect(()=>{
         setSubmitErrMessage({})
+        console.log(submitButtonDisabled)
     },[])
 
     return (
         <div className="auth-form">
             <Link to="/" className="logo"/>
-            <form  onSubmit={handleSubmit} className="auth-form__form" noValidate>
+            <form   onSubmit={handleSubmit} className="auth-form__form" noValidate>
                 <h2 className="auth-form__title">Добро пожаловать!</h2>
-                <fieldset className="auth-form__input-container">
+                <fieldset disabled={!submitButtonDisabled} className="auth-form__input-container">
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">Имя</span>
-                        <input onChange={formValidation.handleChange}
+                        <input  onChange={formValidation.handleChange}
                                value={formValidation.values.name || ''}
                         pattern={userNameRegExp}
                         name='name'
@@ -60,7 +62,7 @@ function Register ({handleRegister, submitErrMessage, setSubmitErrMessage}) {
                         <span className={`auth-form__error-message ${!formValidation.isValid? 'auth-form__error-message_visible' : ''}`}>{formValidation.errors.password}</span>
                     </label>
                 </fieldset>
-                <SubmitButton isValid={formValidation.isValid}  errMessage={submitErrMessage} buttonName="Зарегестрироваться"/>
+                <SubmitButton submitButtonDisabled={submitButtonDisabled} isValid={formValidation.isValid}  errMessage={submitErrMessage} buttonName="Зарегестрироваться"/>
                 <p className="auth-form__text">Уже зарегистрированы? <Link className="auth-form__link" to="/signin">Войти</Link></p>
             </form>
         </div>

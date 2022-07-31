@@ -4,7 +4,7 @@ import React, {useState, useEffect} from "react"
 import {useFormWithValidation} from "../../utils/useFormWithValidation";
 import {emailRegExp} from "../../utils/regExp";
 
-function Login ({handleLogin, successfully, submitErrMessage, setSubmitErrMessage}) {
+function Login ({handleLogin, submitErrMessage, setSubmitErrMessage,submitButtonDisabled}) {
     const formValidation = useFormWithValidation()
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -19,7 +19,7 @@ function Login ({handleLogin, successfully, submitErrMessage, setSubmitErrMessag
             <Link to="/" className="logo"/>
             <form onSubmit={handleSubmit} className="auth-form__form" noValidate>
                 <h2 className="auth-form__title">Добро пожаловать!</h2>
-                <fieldset className="auth-form__input-container auth-form__input-container_type_login">
+                <fieldset disabled={!submitButtonDisabled} className="auth-form__input-container auth-form__input-container_type_login">
                     <label className="auth-form__input">
                         <span className="auth-form__input-name">E-mail</span>
                         <input pattern={emailRegExp}
