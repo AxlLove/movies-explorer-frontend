@@ -34,6 +34,10 @@
     line-height: 34px;
     margin: 150px auto 0;
     text-align: center;
+    visibility: hidden;
+}
+.movies__error-message_visible {
+    visibility: visible;
 }
 @media screen and (max-width: 980px) {
     .movies__card-list {

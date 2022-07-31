@@ -1,37 +1,48 @@
-export const filter =  (cards, checkBox, input) => {
-    const SHORTMOVIE_LIMIT = 40
+import {SHORTMOVIE_LIMIT} from "./constants";
+
     const duration = (checkBox, duration) => {
         if (checkBox) {
-            return duration > SHORTMOVIE_LIMIT
+            return duration < SHORTMOVIE_LIMIT
+
         }
         else {
-            return duration <SHORTMOVIE_LIMIT
+            return duration > SHORTMOVIE_LIMIT
         }
+
     }
 
-
-
-     const reduceSearch = (movie, term, isShort) => {
+     const reduceSearch = (movie, term) => {
         const {
-          nameRU, description, duration,
+          nameRU, nameEn, description, director, country
         } = movie;
-      
-        return (`${nameRU}  ${description}`
-          .replace(',', ' ')
-          .replace('.', ' ')
-          .replace(':', ' ')
-          .replace(';', ' ')
-          .replace('-', ' ')
-          .split(' ')
-          .filter((word) => word.includes(term))
-          .length > 0) && (!isShort || (duration < SHORTMOVIE_LIMIT));
+        const textField = (`${nameRU}  ${description} ${nameEn}, ${nameEn} ${director} ${country}`
+            .toLowerCase()
+            .replace(',', ' ')
+            .replace('.', ' ')
+            .replace(':', ' ')
+            .replace(';', ' ')
+            .replace('-', ' ')
+            .split(' '))
+         const termField = term
+             .toLowerCase()
+             .replace(',', ' ')
+             .replace('.', ' ')
+             .replace(':', ' ')
+             .replace(';', ' ')
+             .replace('-', ' ')
+             .split(' ')
+         return textField.find((word)=> termField.includes(word))
 
-          function finalFunction() {
-            cards.map(item=> {
-                if(reduceSearch(item, input) && function2(sdajsad)){
-                    return item
-                }
-            })
-          }
-      };
-}
+     }
+    export const resultSearch = (cards, checkBox, input) => {
+        let arr = []
+        cards.forEach((item)=>{
+            if (reduceSearch(item, input)  && duration(checkBox, item.duration)) {
+                arr.push(item)
+            }
+            else {
+                return;
+            }
+        })
+        return arr;
+    }

@@ -15,7 +15,8 @@ import { mainApi } from '../../utils/MainApi';
 import {useHistory} from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import {UserContext} from "../../contexts/UserContext";
-
+import {resultSearch} from "../../utils/filter";
+import ErrorTooltip from "../ErrorTooltip/ErrorTooltip";
 
 
 function App() {
@@ -23,28 +24,58 @@ function App() {
 
     const [cards, setCards] = useState([])
     const [savedCards, setSavedCards] = useState([])
+    const [allSavedCards, setAllSavedCards] = useState([])
 
+    const [notFound, setNotFound] = useState(false)
     const [checkBoxState, setCheckBoxState] = useState(false)
     const [inputState, setInputState] = useState('')
     const [load, setLoad] = useState(false)
     const [cardLoadErr, setCardLoadErr] = useState(false)
+
+    const [savedMoviesСheckBoxState, setSavedMoviesСheckBoxState] = useState(false)
+    const [savedMoviesInputState, setSavedMoviesInputState] = useState('')
+
+    const[errorTooltip, setErrorTooltip] = useState({})
 
     //auth
     const [loggedIn, setLoggedIn] = useState(false)
     const [submitErrMessage, setSubmitErrMessage] = useState({})
 
     const history = useHistory()
+
+    // Субмит всех фильмов и загрузка на странцу при входе
     function onSubmitFindMovies () {
         setCardLoadErr(false)
+        setNotFound(false)
+        const savedFilter = JSON.parse(localStorage.getItem('filter'))
+            if(savedFilter) {
+                const findedMovies = resultSearch(savedFilter.cardsList, checkBoxState, inputState)
+                setCards(findedMovies)
+                localStorage.setItem("filter", JSON.stringify({
+                    input: inputState,
+                    checkBox: checkBoxState,
+                    cardsList: savedFilter.cardsList,
+                }))
+            return
+            }
         setLoad(true)
         MoviesApi.getFilms().then((res)=> {
-            setCards(res)
+            //console.log('=>', res)
             localStorage.setItem("filter", JSON.stringify({
                 input: inputState,
                 checkBox: checkBoxState,
                 cardsList: res,
             }))
+            return res
         })
+            .then((res)=> {
+                const findedMovies = resultSearch(res, checkBoxState, inputState)
+                if(findedMovies.length < 1) {
+                    setNotFound(true)
+                }
+                setCards(findedMovies)
+                console.log('=>>', cards)
+            })
             .catch(err=>{
                 console.log(err)
                 setCardLoadErr(true)
@@ -52,37 +83,47 @@ function App() {
             .finally(()=> {
                 setLoad(false)
             })
-}
+        }
      useEffect(()=> {
+         const savedFilter = JSON.parse(localStorage.getItem('filter'))
+         //console.log('filter2', savedFilter)
          if(loggedIn) {
-             const savedFilter = JSON.parse(localStorage.getItem('filter'))
              if (!savedFilter) {
-                 console.log('filter', savedFilter)
                  return
              }
-             console.log('filter', savedFilter)
-             setCards(savedFilter.cardsList)
+             //console.log('filter2', savedFilter)
+
+             const findedMovies = resultSearch(savedFilter.cardsList, savedFilter.checkBox, savedFilter.input)
+             //console.log('найденые мувисы', findedMovies)
+             setCards(findedMovies)
              setCheckBoxState(savedFilter.checkBox)
              setInputState(savedFilter.input)
          }
      },[loggedIn, history])
 
+    // контролируемые инпуты
     function saveInputChange (e) {
         setInputState(e.target.value)
     }
     function saveCheckBoxChange (e) {
         setCheckBoxState(e.target.checked)
     }
+    function saveSavedMoviesInputChange (e) {
+        setSavedMoviesInputState(e.target.value)
+    }
+    function saveSavedMoviesCheckBoxChange (e) {
+        setSavedMoviesСheckBoxState(e.target.checked)
+    }
 
-    function showSavedCards () {
+
+     function loadSavedCards () {
         setCardLoadErr(false)
         setLoad(true)
         mainApi.getSavedFilms().then(res=> {
+            setAllSavedCards(res)
             setSavedCards(res)
-            localStorage.setItem('savedCards', JSON.stringify(res))
         })
             .catch(err=>{
-                console.log(err)
                 setCardLoadErr(true)
             })
             .finally(()=> {
@@ -90,34 +131,56 @@ function App() {
             })
     }
     useEffect(()=> {
-        if (loggedIn) {
-            const localSavedCards = JSON.parse(localStorage.getItem('savedCards'))
-            console.log(localSavedCards)
-            if(localSavedCards) {
-                try {
-                    setSavedCards(localSavedCards)
-                } catch (err) {
-                    localStorage.removeItem('savedCards')
-                    showSavedCards ()
-                }
-            }
-            else {
-                showSavedCards ()
-            }
-        }
-        }, [loggedIn, history])
+        loadSavedCards ()
+    }, [loggedIn,])
 
+    function onSubmitInSavedMovies () {
+            try {
+                const findedMovies = resultSearch(allSavedCards, savedMoviesСheckBoxState, savedMoviesInputState)
+                setSavedCards(findedMovies)
+            } catch (err) {
+                loadSavedCards()
+                const findedMovies = resultSearch(allSavedCards, savedMoviesСheckBoxState, savedMoviesInputState)
+                setSavedCards(findedMovies)
+            }
+
+    }
+    useEffect( ()=> {
+        if (cards && inputState.length>2) {
+            onSubmitFindMovies()
+        }
+    }, [checkBoxState])
 
     function handleCardDelete (card) {
         mainApi.deleteSavedFilm(card._id).then((newCard)=> {
             setSavedCards((state)=> state.filter((c) =>c._id !== card._id))
-        }).catch(console.log)
+
+        }).catch(err=>{
+            setErrorTooltip({open: true,
+            message: "При удалении фильма произошла ошибка"
+            })
+            tooltipClose ()
+        })
     }
     function saveMovie(movie) {
+        console.log(movie)
         mainApi.saveFilm(movie).then(res=> {
             setSavedCards([...savedCards, res])
+
         })
-            .catch(console.log)
+            .catch(err=> {
+                setErrorTooltip({open: true,
+                    message: "При сохранении фильма произошла ошибка"
+                })
+                tooltipClose ()
+            })
+    }
+
+
+    function tooltipClose () {
+        setTimeout(()=>{
+            setErrorTooltip({})
+        }, 3000)
     }
 
     function updateProfile (data) {
@@ -235,7 +298,11 @@ function App() {
                               saveMovie={saveMovie}
                               savedCards={savedCards}
                               handleCardDelete={handleCardDelete}
+                              notFound = {notFound}
+                              loadSavedCards={loadSavedCards}
+                              allSavedCards={allSavedCards}
                       />
+                      <ErrorTooltip errorTooltip={errorTooltip}/>
                       <Footer/>
                   </div>
               </ProtectedRoute>
@@ -243,15 +310,16 @@ function App() {
                   <div className="page">
                       <Header loggedIn={loggedIn} isMain={false}/>
                       <SavedMovies cards={savedCards}
-                                   showSavedCards={showSavedCards}
-                                   onSubmitFindMovies={onSubmitFindMovies}
-                                   saveInputChange={saveInputChange}
-                                   saveCheckBoxChange={saveCheckBoxChange}
-                                   checkBoxState={checkBoxState}
-                                   inputState={inputState}
+                                   loadSavedCards={loadSavedCards}
+                                   onSubmitFindMovies={onSubmitInSavedMovies}
+                                   saveInputChange={saveSavedMoviesInputChange}
+                                   saveCheckBoxChange={saveSavedMoviesCheckBoxChange}
+                                   checkBoxState={savedMoviesСheckBoxState}
+                                   inputState={savedMoviesInputState}
                                    load={load}
                                    cardLoadErr={cardLoadErr}
                                    handleCardDelete={handleCardDelete}/>
+                      <ErrorTooltip errorTooltip={errorTooltip}/>
                       <Footer/>
                   </div>
               </ProtectedRoute>
@@ -297,7 +365,8 @@ function App() {
 export default App;
 
 
-//TODO https://habr.com/ru/company/timeweb/blog/584862/
 //TODO ошибка загрузки cards в localstorage
 // TODO делать обработку ошибок
 // TODO поработать над constants.js
+// TODO не все карты валидны обработать ошибку
+//TODO  валдация после сабмита формы поиска

@@ -23,3 +23,4 @@
 @import url(components/NotFoundPage/NotFoundPage.css);
 @import url(components/Portfolio/Portfolio.css);
 @import url(components/Preloader/Preloader.css);
+@import url(components/ErrorTooltip/ErrorTooltip.css);

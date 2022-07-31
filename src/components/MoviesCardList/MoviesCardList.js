@@ -3,13 +3,11 @@ import { Switch } from "react-router-dom";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import React, {useEffect, useState} from "react";
 
-function MoviesCardList ({cards, load, cardLoadErr, handleCardDelete,saveMovie, savedCards,}) {
+function MoviesCardList ({cards , load, cardLoadErr, handleCardDelete,saveMovie, savedCards,notFound,allSavedCards}) {
 
-    // const [isLiked, setIsLiked] = (false)
     const [list, setList] = useState([])
     const [visible, setVisible] = useState(0)
     const [loadMoreButton, setLoadMore] = useState(false)
-
     const [width, setWidth] = React.useState(window.innerWidth);
 
 React.useEffect(() => {
@@ -36,7 +34,12 @@ React.useEffect(() => {
    }
     useEffect(()=> {
       const cardVisible = hWidth()
-        setList(cards)
+        console.log(cards)
+        if(cards){
+            setList(cards)
+        }else{
+            setList([])
+        }
         setVisible(cardVisible)
     },[cards])
 
@@ -55,15 +58,15 @@ React.useEffect(() => {
     }
     useEffect(()=> {
         const morVis = list.length>visible
-        setLoadMore(morVis)  
+        setLoadMore(morVis)
     },[visible, list])
 
 
    function checkCard (card) {
-       if(!savedCards) {
+       if(!savedCards ) {
            return
        }
-       let tst =  savedCards.find(item=> item.movieId === card.id )
+       let tst =  allSavedCards.find(item=> item.movieId === card.id )
        if (tst) {
            return true;
        }
@@ -75,24 +78,30 @@ React.useEffect(() => {
             <Route  path={'/movies'}>
                 <>
                     {cardLoadErr ?
-                        <p className="movies__error-message">Возможно, проблема с соединением или сервер недоступен.
+                        <p className="movies__error-message movies__error-message_visible">Возможно, проблема с соединением или сервер недоступен.
                             Подождите немного и попробуйте ещё раз</p>
                         :
-                        <>
+                        notFound?
+                        <p className={`movies__error-message ${notFound? 'movies__error-message_visible': ''}`}>Ничего не найдено</p>
+                        :
+                            <>
                             <ul className={`movies__card-list ${load ? 'movies__card-list_visible': ''}`}>
-                                {
-                                    list.slice(0, visible).map(card => (
-                                        <MoviesCard isLiked={checkCard(card)}
-                                                    card={card}
-                                                    key={card.id || card.movieId}
-                                                    savedCards={savedCards}
-                                                    saveMovie={saveMovie}
-                                                    handleCardDelete={handleCardDelete}/>
-                                    ))
-                                }
-                            </ul>
-                            {loadMoreButton && <button onClick={loadMore}  type="button" className="movies__add-card-button">Еще</button>}
-                        </>
+                                    {
+
+                                        list.slice(0, visible).map(card => (
+                                            <MoviesCard isLiked={checkCard(card)}
+                                                        card={card}
+                                                        key={card.id || card.movieId}
+                                                        savedCards={savedCards}
+                                                        saveMovie={saveMovie}
+                                                        handleCardDelete={handleCardDelete}
+                                            />
+                                        ))
+                                    }
+                                </ul>
+                                {loadMoreButton && <button onClick={loadMore}  type="button" className="movies__add-card-button">Еще</button>}
+                            </>
+
                     }
                 </>
             </Route>
@@ -105,8 +114,7 @@ React.useEffect(() => {
                         <ul className={`movies__card-list ${load ? 'movies__card-list_visible': ''}`}>
                             {
                                 cards.map(card => (
-                                    <MoviesCard isLiked={checkCard(card)}
-                                                card={card}
+                                    <MoviesCard card={card}
                                                 key={card.id || card.movieId}
                                                 savedCards={savedCards}
                                                 saveMovie={saveMovie}
@@ -121,7 +129,3 @@ React.useEffect(() => {
  )
 }
 export default MoviesCardList;
-
-//TODO https://habr.com/ru/company/timeweb/blog/584862/
-//https://question-it.com/questions/2686377/knopka-zagruzit-esche-v-react
-//https://dev.to/narendersaini32/how-to-create-load-more-logic-in-react-474m

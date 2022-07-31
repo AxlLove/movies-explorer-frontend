@@ -1,8 +1,8 @@
 import { Route } from "react-router-dom";
 import { Switch } from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-function MoviesCard ({card, handleCardDelete, saveMovie, isLiked, savedCards}) {
+function MoviesCard ({card, handleCardDelete, saveMovie, isLiked, savedCards }) {
     const [liked, setLiked] = useState(isLiked)
 const image = card.image.url
     function handleDelete() {
@@ -12,20 +12,29 @@ const image = card.image.url
     }
     function handleDislike () {
         const dislikedCard = savedCards.find(item=> item.movieId === card.id)
+        if (!dislikedCard) {
+            setLiked(false)
+            return
+        }
         console.log(dislikedCard)
         handleCardDelete(dislikedCard)
         setLiked(false)
     }
     function handleSaveMovie () {
+        setLiked(true)
         const {
-            country,director, duration, year, description, image, trailerLink, id, nameRU, nameEN
+            country ,director, duration, year, description, image, trailerLink, id, nameRU, nameEN
         } = card;
         const cardImage =`https://api.nomoreparties.co${image.url}`
+
         saveMovie({
-            country,director, duration, year, description, image: cardImage, trailerLink, thumbnail: cardImage, movieId: id, nameRU, nameEN
+            country ,director, duration, year, description, image: cardImage, trailerLink, thumbnail: cardImage, movieId: id, nameRU, nameEN
         })
-        setLiked(true)
+            setLiked(true)
     }
+
+
+
     return (
 <Switch>
     <Route path='/movies'>
@@ -42,6 +51,7 @@ const image = card.image.url
                 <button onClick={handleDislike} type="button" className="movies__card-button movies__card-button_type_saved">Сохранить</button>
                 :
                 <button onClick={handleSaveMovie} type="button" className="movies__card-button">Сохранить</button>
+
             }
         </li>
     </Route>
