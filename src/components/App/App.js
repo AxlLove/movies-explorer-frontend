@@ -207,7 +207,7 @@ function App() {
         return mainApi
             .register({name, email, password})
             .then(()=>{
-                    history.push('/signin')
+                    handleLogin(email, password)
             })
             .catch(err=>{
                 if (err === 409){
@@ -233,7 +233,7 @@ function App() {
                 localStorage.setItem("jwt", data.token)
                 setLoggedIn(true)
 
-                history.push('/')
+                history.push('/movies')
             })
             .catch(err=>{
                 if (err === 401){
@@ -372,6 +372,7 @@ function App() {
                       submitErrMessage={submitErrMessage}
                       successful={successful}
                       submitButtonDisabled={submitButtonDisabled}
+                      setSubmitButtonDisabled={setSubmitButtonDisabled}
                       />
                   </div>
               </ProtectedRoute>
@@ -409,7 +410,3 @@ function App() {
 
 export default App;
 
-
-//TODO ошибка загрузки cards в localstorage
-// TODO делать обработку ошибок
-//TODO  валдация после сабмита формы поиска

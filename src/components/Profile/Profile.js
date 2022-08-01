@@ -3,7 +3,7 @@ import {UserContext} from "../../contexts/UserContext";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import {useFormWithValidation} from "../../utils/useFormWithValidation";
 import {emailRegExp, userNameRegExp} from "../../config/regExp";
-function Profile ({handleSignOut,updateProfile,submitErrMessage, successful,submitButtonDisabled}) {
+function Profile ({handleSignOut,updateProfile,submitErrMessage, successful,submitButtonDisabled,setSubmitButtonDisabled}) {
     const [redact, setRedact] = useState(true)
     const currentUser = React.useContext(UserContext);
 
@@ -20,6 +20,12 @@ function Profile ({handleSignOut,updateProfile,submitErrMessage, successful,subm
             formValidation.setIsValid(true)
         }
     }, [redact])
+
+    useEffect(()=> {
+        if(`${formValidation.values.name}${formValidation.values.email}` === `${currentUser.name}${currentUser.email}`) {
+            formValidation.setIsValid(false)
+        }
+    },[formValidation.values.name, formValidation.values.email])
 
     const readctProfile = (e)=> {
         setRedact(false)
