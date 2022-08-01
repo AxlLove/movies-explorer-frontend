@@ -51,7 +51,6 @@ function App() {
         setNotFound(false)
 
         const savedFilter = JSON.parse(localStorage.getItem('filter'))
-        console.log(savedFilter)
             if(savedFilter) {
                 const findedMovies = resultSearch(savedFilter.cardsList, checkBoxState, inputState)
                 setCards(findedMovies)
