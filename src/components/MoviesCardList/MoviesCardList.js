@@ -34,7 +34,6 @@ React.useEffect(() => {
    }
     useEffect(()=> {
       const cardVisible = hWidth()
-        console.log(cards)
         if(cards){
             setList(cards)
         }else{

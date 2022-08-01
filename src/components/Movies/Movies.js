@@ -2,11 +2,10 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import {useEffect} from "react";
-
+import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 function Movies({onSubmitFindMovies, cards, saveInputChange, saveCheckBoxChange, checkBoxState,inputState, load, cardLoadErr,saveMovie,savedCards,handleCardDelete, notFound, loadSavedCards, allSavedCards}) {
     useEffect(()=> {
         loadSavedCards()
-        console.log('movies')
     }, [])
 
     return (
@@ -18,7 +17,12 @@ function Movies({onSubmitFindMovies, cards, saveInputChange, saveCheckBoxChange,
                         inputState={inputState}
                         load={load}
 
-            />
+            >
+            <FilterCheckbox saveCheckBoxChange={saveCheckBoxChange} 
+                 checkBoxState={checkBoxState} 
+                 onSubmitFindMovies={onSubmitFindMovies}/>
+            </SearchForm>
+            
             <Preloader load={load}/>
             <MoviesCardList cards={cards}
                             load={load}

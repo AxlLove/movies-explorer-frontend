@@ -17,40 +17,41 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import {UserContext} from "../../contexts/UserContext";
 import {resultSearch} from "../../utils/filter";
 import ErrorTooltip from "../ErrorTooltip/ErrorTooltip";
-
+import ProtectedAuthRoute from '../ProtectedAuthRoute/ProtectedAuthRoute';
 
 function App() {
     const [userParams, setUserParams] = useState({})
 
     const [cards, setCards] = useState([])
+
     const [savedCards, setSavedCards] = useState([])
     const [allSavedCards, setAllSavedCards] = useState([])
 
-    const [notFound, setNotFound] = useState(false)
     const [checkBoxState, setCheckBoxState] = useState(false)
     const [inputState, setInputState] = useState('')
     const [load, setLoad] = useState(false)
-    const [cardLoadErr, setCardLoadErr] = useState(false)
-
+    
     const [savedMoviesCheckBoxState, setSavedMoviesCheckBoxState] = useState(false)
     const [savedMoviesInputState, setSavedMoviesInputState] = useState('')
 
+    //errs
+    const [cardLoadErr, setCardLoadErr] = useState(false)
     const[errorTooltip, setErrorTooltip] = useState({})
-
     const [successful, setSuccessful] = useState(false)
+    const [notFound, setNotFound] = useState(false)
     //auth
     const [loggedIn, setLoggedIn] = useState(false)
     const [submitErrMessage, setSubmitErrMessage] = useState({})
-    const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false)
+    const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true)
 
     const history = useHistory()
 
-    // Субмит всех фильмов и загрузка на странцу при входе
     function onSubmitFindMovies () {
         setCardLoadErr(false)
         setNotFound(false)
 
         const savedFilter = JSON.parse(localStorage.getItem('filter'))
+        console.log(savedFilter)
             if(savedFilter) {
                 const findedMovies = resultSearch(savedFilter.cardsList, checkBoxState, inputState)
                 setCards(findedMovies)
@@ -64,25 +65,21 @@ function App() {
                 }))
             return
             }
-        setSubmitButtonDisabled(true)
-        setLoad(true)
-        MoviesApi.getFilms().then((res)=> {
-            //console.log('=>', res)
-            localStorage.setItem("filter", JSON.stringify({
-                input: inputState,
-                checkBox: checkBoxState,
-                cardsList: res,
-            }))
+            setLoad(true)
+            MoviesApi.getFilms().then((res)=> {
+                localStorage.setItem("filter", JSON.stringify({
+                    input: inputState,
+                    checkBox: checkBoxState,
+                    cardsList: res,
+                }))
             return res
-        })
+            })
             .then((res)=> {
                 const findedMovies = resultSearch(res, checkBoxState, inputState)
                 if(findedMovies.length < 1) {
                     setNotFound(true)
                 }
                 setCards(findedMovies)
-                setSubmitButtonDisabled(false)
-                console.log('=>>', cards)
             })
             .catch(err=>{
                 console.log(err)
@@ -92,22 +89,7 @@ function App() {
                 setLoad(false)
             })
         }
-     useEffect(()=> {
-         const savedFilter = JSON.parse(localStorage.getItem('filter'))
-         //console.log('filter2', savedFilter)
-         if(loggedIn) {
-             if (!savedFilter) {
-                 return
-             }
-             console.log('filter2', savedFilter)
 
-             const findedMovies = resultSearch(savedFilter.cardsList, savedFilter.checkBox, savedFilter.input)
-             //console.log('найденые мувисы', findedMovies)
-             setCards(findedMovies)
-             setCheckBoxState(savedFilter.checkBox)
-             setInputState(savedFilter.input)
-         }
-     },[loggedIn, history])
 
     // контролируемые инпуты
     function saveInputChange (e) {
@@ -123,31 +105,24 @@ function App() {
         setSavedMoviesCheckBoxState(e.target.checked)
     }
 
-
+//savedmovs
      function loadSavedCards () {
         setNotFound(false)
         setCardLoadErr(false)
-         setSavedMoviesInputState('')
-         setSavedMoviesCheckBoxState(false)
-         setSubmitButtonDisabled(true)
+        setSavedMoviesInputState('')
+        setSavedMoviesCheckBoxState(false)
         mainApi.getSavedFilms().then(res=> {
             setAllSavedCards(res)
             setSavedCards(res)
-            setSubmitButtonDisabled(false)
         })
             .catch(err=>{
                 setCardLoadErr(true)
             })
 
     }
-    useEffect(()=> {
-        loadSavedCards ()
-        setSavedMoviesInputState('')
-        setSavedMoviesCheckBoxState(false)
-
-    }, [loggedIn, history])
 
     function onSubmitInSavedMovies () {
+        setNotFound(false)
             try {
                 const findedMovies = resultSearch(allSavedCards, savedMoviesCheckBoxState, savedMoviesInputState)
                 if(findedMovies.length < 1) {
@@ -162,17 +137,13 @@ function App() {
                 }
                 setSavedCards(findedMovies)
             }
-
     }
-    useEffect( ()=> {
-        if (cards && inputState.length>2) {
-            onSubmitFindMovies()
-        }
-    }, [checkBoxState])
 
+//like/dislike
     function handleCardDelete (card) {
         mainApi.deleteSavedFilm(card._id).then(()=> {
             setSavedCards((state)=> state.filter((c) =>c._id !== card._id))
+            setAllSavedCards((state)=> state.filter((c) =>c._id !== card._id))
 
         }).catch(()=>{
             setErrorTooltip({open: true,
@@ -182,9 +153,9 @@ function App() {
         })
     }
     function saveMovie(movie) {
-        console.log(movie)
         mainApi.saveFilm(movie).then(res=> {
             setSavedCards([...savedCards, res])
+            setAllSavedCards([...savedCards, res])
 
         })
             .catch(err=> {
@@ -206,14 +177,13 @@ function App() {
         setSubmitErrMessage({})
         setSubmitButtonDisabled(false)
         mainApi.updateProfile(data).then(res=>{
-            setSubmitButtonDisabled(true)
             setUserParams(res)
             setSuccessful(true)
             setTimeout(()=>{
                 setSuccessful(false)
             }, 3000)
         }).catch(err=>{
-            setSubmitButtonDisabled(true)
+
             if (err === 409){
                 setSubmitErrMessage({err:true, message: 'Такой email уже занят'})
                 setTimeout(()=>{
@@ -226,8 +196,11 @@ function App() {
                     setSubmitErrMessage({})
                 }, 3000)
             }
+        }).finally(()=> {
+            setSubmitButtonDisabled(true)
         })
     }
+
     //auth
     const handleRegister = (name, email, password) => {
         setSubmitErrMessage({})
@@ -235,11 +208,9 @@ function App() {
         return mainApi
             .register({name, email, password})
             .then(()=>{
-                    setSubmitButtonDisabled(true)
                     history.push('/signin')
             })
             .catch(err=>{
-                setSubmitButtonDisabled(true)
                 if (err === 409){
                     setSubmitErrMessage({err:true, message: 'Такой email уже занят'})
                 }
@@ -247,12 +218,14 @@ function App() {
                     setSubmitErrMessage({err:true, message: 'При регистрации пользователя произошла ошибка'})
                 }
             })
+            .finally(()=>{
+                setSubmitButtonDisabled(true)
+            })
     }
 
     const handleLogin = (email, password) => {
         setSubmitButtonDisabled(false)
         setSubmitErrMessage({})
-        setSubmitButtonDisabled(true)
         return mainApi.login({email, password})
             .then((data)=>{
                 if(!data.token){
@@ -260,17 +233,19 @@ function App() {
                 }
                 localStorage.setItem("jwt", data.token)
                 setLoggedIn(true)
-                setSubmitButtonDisabled(true)
+
                 history.push('/')
             })
             .catch(err=>{
                 if (err === 401){
-                    setSubmitButtonDisabled(true)
                     setSubmitErrMessage({err:true, message: 'Вы ввели неправильный логин или пароль'})
                 }
                 else {
                     setSubmitErrMessage({err:true, message: 'На сервере произошла шибка'})
                 }
+            })
+            .finally(()=>{
+                setSubmitButtonDisabled(true)
             })
     }
 
@@ -280,21 +255,10 @@ function App() {
                 .then(data=>{
                     setUserParams(data)
                     setLoggedIn(true)
-                    console.log(data)
                 })
                 .catch(console.log)
         }
     }
-
-    useEffect(()=>{
-        tokenCheck()
-    },[loggedIn])
-
-
-    useEffect(()=>{
-        setSubmitErrMessage({})
-    },[])
-
     function handleSignOut (){
         localStorage.removeItem('jwt')
         localStorage.removeItem('filter')
@@ -305,7 +269,49 @@ function App() {
         setLoggedIn(false)
         setSavedCards([])
     }
+    
 
+    useEffect(()=> {
+        if(loggedIn) {
+            loadSavedCards ()
+            setSavedMoviesInputState('')
+            setSavedMoviesCheckBoxState(false)
+        }
+    }, [loggedIn, history])
+
+    useEffect( ()=> {
+        if (cards && inputState.length>2) {
+            onSubmitFindMovies()
+        }
+    }, [checkBoxState])
+
+    useEffect(()=> {
+        if(savedMoviesInputState.length>2) {
+            onSubmitInSavedMovies ()
+        } 
+    }, [savedMoviesCheckBoxState])
+
+    useEffect(()=>{
+        tokenCheck()
+    },[loggedIn])
+
+
+    useEffect(()=>{
+        setSubmitErrMessage({})
+    },[])
+
+    useEffect(()=> {
+        const savedFilter = JSON.parse(localStorage.getItem('filter'))
+        if(loggedIn) {
+            if (!savedFilter) {
+                return
+            }
+            const findedMovies = resultSearch(savedFilter.cardsList, savedFilter.checkBox, savedFilter.input)
+            setCards(findedMovies)
+            setCheckBoxState(savedFilter.checkBox)
+            setInputState(savedFilter.input)
+        }
+    },[loggedIn, history])
 
     return (
         <UserContext.Provider value={userParams}>
@@ -372,7 +378,7 @@ function App() {
               </ProtectedRoute>
 
 
-          <Route path='/signup'>
+          <ProtectedAuthRoute loggedIn={loggedIn} path='/signup'>
               <div className="page">
                   <Register handleRegister={handleRegister}
                             submitErrMessage = {submitErrMessage}
@@ -381,8 +387,8 @@ function App() {
                   />
                             
               </div>
-          </Route>
-          <Route path='/signin'>
+          </ProtectedAuthRoute>
+          <ProtectedAuthRoute loggedIn={loggedIn} path='/signin'>
               <div className="page">
                   <Login
                       handleLogin={handleLogin}
@@ -391,7 +397,7 @@ function App() {
                       submitButtonDisabled={submitButtonDisabled}
                   />
               </div>
-          </Route>
+          </ProtectedAuthRoute>
           <Route path='*'>
               <div className="page">
                   <NotFoundPage/>

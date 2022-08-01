@@ -1,4 +1,4 @@
-import {MOVIES_MY_API_URL} from "./constants";
+import {MOVIES_MY_API_URL} from "../config/constants";
 class MainApi {
     constructor(data) {
         this._url = data.url;

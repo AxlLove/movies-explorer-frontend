@@ -1,4 +1,4 @@
-import {SHORTMOVIE_LIMIT} from "./constants";
+import {SHORTMOVIE_LIMIT} from "../config/constants";
 
     const duration = (checkBox, duration) => {
         if (checkBox) {

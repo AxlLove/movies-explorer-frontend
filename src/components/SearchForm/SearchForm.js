@@ -1,7 +1,6 @@
-import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import {useEffect, useState} from "react";
 
-function SearchForm({onSubmitFindMovies,saveCheckBoxChange, saveInputChange, checkBoxState, inputState}) {
+function SearchForm({onSubmitFindMovies, saveInputChange, inputState, children}) {
    const [searchFormIsValid, setSearchFormIsValid] = useState(false)
     function handleSubmit(e) {
         e.preventDefault()
@@ -23,7 +22,9 @@ function SearchForm({onSubmitFindMovies,saveCheckBoxChange, saveInputChange, che
         <input onChange={handleChange} type="text" className="movies__search-input" placeholder="Фильм" value={inputState} required minLength={2} maxLength={32}></input>
         <button disabled={!searchFormIsValid} type="submit" className={`movies__search-button ${!searchFormIsValid? 'movies__search-button_disabled' : ''}`}>Найти</button>
     </div>
-    <FilterCheckbox saveCheckBoxChange={saveCheckBoxChange} checkBoxState={checkBoxState} onSubmitFindMovies={onSubmitFindMovies}/>
+    <div className="movies__filters">
+    {children}
+    </div>
 </form>
     );
 }

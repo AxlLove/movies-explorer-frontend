@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import React, {useEffect, useState} from "react"
 import {useFormWithValidation} from "../../utils/useFormWithValidation";
-import {userNameRegExp, emailRegExp} from "../../utils/regExp";
+import {userNameRegExp, emailRegExp} from "../../config/regExp";
 
 function Register ({handleRegister, submitErrMessage, setSubmitErrMessage,submitButtonDisabled}) {
 
@@ -12,11 +12,9 @@ function Register ({handleRegister, submitErrMessage, setSubmitErrMessage,submit
         const {name, email, password} = formValidation.values
         handleRegister(name, email, password)
         formValidation.resetForm()
-        console.log(submitButtonDisabled)
     }
     useEffect(()=>{
         setSubmitErrMessage({})
-        console.log(submitButtonDisabled)
     },[])
 
     return (

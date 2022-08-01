@@ -1,4 +1,4 @@
-import {MOVIES_URL} from "./constants";
+import {MOVIES_URL} from "../config/constants";
 
 const checkResponse = (response) => {
     if (response.ok) {

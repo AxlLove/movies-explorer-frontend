@@ -2,28 +2,30 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import {useEffect} from "react"
+import ResetFilter from "../ResetFilter.js/ResetFilter";
+import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 function SavedMovies({onSubmitFindMovies, cards, saveInputChange, saveCheckBoxChange, checkBoxState,inputState, load, cardLoadErr,handleCardDelete, loadSavedCards, notFound}) {
-
     useEffect(()=> {
         loadSavedCards()
-        console.log('movies')
     }, [])
     return (
         <section className="movies">
             <SearchForm saveInputChange={saveInputChange}
-                        saveCheckBoxChange={saveCheckBoxChange}
-                        checkBoxState={checkBoxState}
                         inputState={inputState}
-                        onSubmitFindMovies={onSubmitFindMovies}
-            />
+                        onSubmitFindMovies={onSubmitFindMovies}>
+                 <FilterCheckbox 
+                  saveCheckBoxChange={saveCheckBoxChange} 
+                  checkBoxState={checkBoxState} />
+                <ResetFilter loadSavedCards={loadSavedCards}></ResetFilter>
+            </SearchForm>
             <Preloader load={load}/>
             <MoviesCardList
                             cards={cards}
                             load={load}
                             cardLoadErr={cardLoadErr}
                             handleCardDelete={handleCardDelete}
-                                notFound={notFound}/>
+                            notFound={notFound}/>
         </section>
 
     );

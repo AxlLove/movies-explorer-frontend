@@ -4,10 +4,8 @@ import {useEffect, useState} from "react";
 
 function MoviesCard ({card, handleCardDelete, saveMovie, isLiked, savedCards }) {
     const [liked, setLiked] = useState(isLiked)
-const image = card.image.url
+    const image = card.image.url
     function handleDelete() {
-    console.log(card)
-        console.log(card)
         handleCardDelete(card)
     }
     function handleDislike () {
@@ -16,7 +14,6 @@ const image = card.image.url
             setLiked(false)
             return
         }
-        console.log(dislikedCard)
         handleCardDelete(dislikedCard)
         setLiked(false)
     }

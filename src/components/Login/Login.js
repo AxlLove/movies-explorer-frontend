@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import React, {useState, useEffect} from "react"
 import {useFormWithValidation} from "../../utils/useFormWithValidation";
-import {emailRegExp} from "../../utils/regExp";
+import {emailRegExp} from "../../config/regExp";
 
 function Login ({handleLogin, submitErrMessage, setSubmitErrMessage,submitButtonDisabled}) {
     const formValidation = useFormWithValidation()
