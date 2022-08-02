@@ -17,7 +17,7 @@ function Profile ({handleSignOut,updateProfile,submitErrMessage, successful,subm
     },[currentUser,redact])
     useEffect(()=>{
         if (formValidation.values.name && formValidation.values.email !== undefined ) {
-            formValidation.setIsValid(true)
+            formValidation.setIsValid(false)
         }
     }, [redact])
 
@@ -29,7 +29,6 @@ function Profile ({handleSignOut,updateProfile,submitErrMessage, successful,subm
 
     const readctProfile = (e)=> {
         setRedact(false)
-        formValidation.setIsValid()
     }
     const onSubmit = (e)=> {
         const {name, email} = formValidation.values;

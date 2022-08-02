@@ -1,4 +1,4 @@
-function SubmitButton ({buttonName, errMessage, isValid, submitButtonDisabled}) {
+function SubmitButton ({buttonName, errMessage, isValid}) {
 
     const {err, message} = errMessage;
     return (
