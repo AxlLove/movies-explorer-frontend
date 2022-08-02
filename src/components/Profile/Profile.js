@@ -3,7 +3,7 @@ import {UserContext} from "../../contexts/UserContext";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import {useFormWithValidation} from "../../utils/useFormWithValidation";
 import {emailRegExp, userNameRegExp} from "../../config/regExp";
-function Profile ({handleSignOut,updateProfile,submitErrMessage, successful,submitButtonDisabled,setSubmitButtonDisabled}) {
+function Profile ({handleSignOut,updateProfile,submitErrMessage, successful,submitButtonDisabled}) {
     const [redact, setRedact] = useState(true)
     const currentUser = React.useContext(UserContext);
 

@@ -372,7 +372,6 @@ function App() {
                       submitErrMessage={submitErrMessage}
                       successful={successful}
                       submitButtonDisabled={submitButtonDisabled}
-                      setSubmitButtonDisabled={setSubmitButtonDisabled}
                       />
                   </div>
               </ProtectedRoute>
