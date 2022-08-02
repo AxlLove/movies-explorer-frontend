@@ -250,10 +250,10 @@ function App() {
 
     const tokenCheck = () =>{
         if (localStorage.getItem("jwt")){
+            setLoggedIn(true)
             mainApi.getProfile()
                 .then(data=>{
                     setUserParams(data)
-                    setLoggedIn(true)
                 })
                 .catch(console.log)
         }

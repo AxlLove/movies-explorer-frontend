@@ -11,7 +11,6 @@ function Register ({handleRegister, submitErrMessage, setSubmitErrMessage,submit
         e.preventDefault()
         const {name, email, password} = formValidation.values
         handleRegister(name, email, password)
-        formValidation.resetForm()
     }
     useEffect(()=>{
         setSubmitErrMessage({})
