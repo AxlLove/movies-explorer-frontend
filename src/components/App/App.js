@@ -279,13 +279,13 @@ function App() {
     }, [loggedIn, history])
 
     useEffect( ()=> {
-        if (cards && inputState.length>2) {
+        if (cards && inputState.length>=2) {
             onSubmitFindMovies()
         }
     }, [checkBoxState])
 
     useEffect(()=> {
-        if(savedMoviesInputState.length>2) {
+        if(savedMoviesInputState.length>=2) {
             onSubmitInSavedMovies ()
         } 
     }, [savedMoviesCheckBoxState])

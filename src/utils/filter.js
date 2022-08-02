@@ -31,7 +31,6 @@ import {SHORTMOVIE_LIMIT} from "../config/constants";
              .replace(';', ' ')
              .replace('-', ' ')
              .split(' ')
-             console.log(termField)
          return textField.find((word)=> termField.find((item)=>word.includes(item)))
 
      }
