@@ -1,8 +1,10 @@
-function SubmitButton ({buttonName}) {
+function SubmitButton ({buttonName, errMessage, isValid}) {
+
+    const {err, message} = errMessage;
     return (
         <>
-        <span className="submit-button__error-mesage submit-button__error-mesage_visible">При обновлении профиля произошла ошибка.</span>
-        <button  type="submit" className="submit-button">{buttonName}</button>
+         <span className={`submit-button__error-message ${!err?'submit-button__error-message_visible' : ''}`}>{message}</span>
+        <button disabled={!isValid}  type="submit" className={`submit-button ${!isValid? 'submit-button_disabled' : ''}`}>{buttonName}</button>
         </>
     )
 }
