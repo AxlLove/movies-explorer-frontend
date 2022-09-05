@@ -1,8 +1,9 @@
-# Дипломный проект: «Movies Explorer» (Frontend: React)
+# Дипломный проект: 
+# «Movies Explorer» (Frontend: React)
 
 <div align="center">
 <a target="_blank" href="https://movies-explorer.kitaev.nomoreparties.sbs"><img src="https://github.com/AxlLove/Axllove/blob/master/src/movies-explorer.PNG" alt="Movies Explorer"></a>
- <div align="center">**https://movies-explorer.kitaev.nomoreparties.sbs**</div>
+ <div align="center">https://movies-explorer.kitaev.nomoreparties.sbs</div>
 </div>
 
 Данная дипломная работа реализована, для подтверждения и закрепления полученных знаний, в ходе учебного процесса на курсе «Фронтенд разработчик» платформы [Яндекс.Практикума](https://practicum.yandex.ru/ "Сервис онлайн-образования от Яндекса"). В ней я реализовал полноценное одностраничное приложение (SPA) имитирующее кино-портал, с возможностью регистрации/авторизации пользователей, поиска по базе представленных фильмов, а также сохранения понравившихся фильмов себе в закладки.
@@ -22,10 +23,10 @@
 * Grid layout
 * Адаптивная, кроссбраузерная верстка
 
-##Frontend
+## Frontend
 https://movies-explorer.kitaev.nomoreparties.sbs
 
-##Backend
+## Backend
 Запрос для получения каталога всех фильмов производятся к сервису beatfilm-movies
 https://api.nomoreparties.co/beatfilm-movies
 Логика сохранения/удаления фильмов авторизации/регистрации исполнена на озданном мной API:
