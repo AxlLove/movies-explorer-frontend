@@ -24,8 +24,7 @@
 * Адаптивная, кроссбраузерная верстка
 
 ## Frontend
-https://movies-explorer.kitaev.nomoreparties.sbs
-
+[link](https://movies-explorer.kitaev.nomoreparties.sbs){:target="_blank"}
 ## Backend
 Запрос для получения каталога всех фильмов производятся к сервису beatfilm-movies
 https://api.nomoreparties.co/beatfilm-movies </br>
