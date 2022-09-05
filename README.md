@@ -4,7 +4,7 @@
 <div align="center" target="_blank">
 <a target="_blank" href="https://movies-explorer.kitaev.nomoreparties.sbs"><img src="https://github.com/AxlLove/Axllove/blob/master/src/movies-explorer.PNG" alt="Movies Explorer"></a>
  <div target="_blank" align="center">https://movies-explorer.kitaev.nomoreparties.sbs</div>
-</div>
+</div></br>
 
 Данная дипломная работа реализована, для подтверждения и закрепления полученных знаний, в ходе учебного процесса на курсе «Фронтенд разработчик» платформы [Яндекс.Практикума](https://practicum.yandex.ru/ "Сервис онлайн-образования от Яндекса"). В ней я реализовал полноценное одностраничное приложение (SPA) имитирующее кино-портал, с возможностью регистрации/авторизации пользователей, поиска по базе представленных фильмов, а также сохранения понравившихся фильмов себе в закладки.
 
