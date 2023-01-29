@@ -2,8 +2,8 @@
 # «Movies Explorer» (Frontend: React)
 
 <div align="center" target="_blank" rel="noopener">
-<a href="https://movies-explorer.kitaev.nomoreparties.sbs"><img src="https://github.com/AxlLove/Axllove/blob/master/src/movies-explorer.PNG" target="_blank" rel="noopener" alt="Movies Explorer"></a>
- <div align="center" target="_blank" rel="noopener">https://movies-explorer.kitaev.nomoreparties.sbs</div>
+<a href="https://axllove.github.io/movies-explorer-frontend/"><img src="https://github.com/AxlLove/Axllove/blob/master/src/movies-explorer.PNG" target="_blank" rel="noopener" alt="Movies Explorer"></a>
+ <div align="center" target="_blank" rel="noopener">https://axllove.github.io/movies-explorer-frontend/</div>
 </div></br>
 
 Данная дипломная работа реализована, для подтверждения и закрепления полученных знаний, в ходе учебного процесса на курсе «Фронтенд разработчик» платформы [Яндекс.Практикума](https://practicum.yandex.ru/ "Сервис онлайн-образования от Яндекса"). В ней я реализовал полноценное одностраничное приложение (SPA) имитирующее кино-портал, с возможностью регистрации/авторизации пользователей, поиска по базе представленных фильмов, а также сохранения понравившихся фильмов себе в закладки.
@@ -24,7 +24,7 @@
 * Адаптивная, кроссбраузерная верстка
 
 ## Frontend
-https://movies-explorer.kitaev.nomoreparties.sbs
+https://axllove.github.io/movies-explorer-frontend/
 
 ## Backend
 Запрос для получения каталога всех фильмов производятся к сервису beatfilm-movies
